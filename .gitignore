@@ -15,4 +15,4 @@ packages/
 *.nupkg
 *.snk
 
-.env
+TaskTracker_KR/.env
