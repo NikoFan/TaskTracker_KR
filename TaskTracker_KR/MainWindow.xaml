@@ -5,8 +5,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskTracker_KR"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="800"
+        MinHeight="430" MinWidth="700">
+    <Grid Style="{StaticResource background}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
+        <Border Style="{StaticResource left_side}"
+                Grid.Column="0">
+            <Grid>
+                <StackPanel
+                    Margin="20 20 0 20"
+                    Orientation="Vertical"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top">
+                    
+                    <Button Style="{StaticResource small_buttons}"
+                            Content="Text">
+                        
+                    </Button>
+                    <Button Style="{StaticResource small_buttons}"
+                            Content="Text2">
+
+                    </Button>
+                    <Button Style="{StaticResource small_buttons}"
+        Content="Text2">
+
+                    </Button>
+                    
+                </StackPanel>
+            </Grid>
+        </Border>
+        
+        
+        <Border Grid.Column="1" Style="{StaticResource log_in_panel}">
+            <StackPanel 
+                VerticalAlignment="Center"
+                HorizontalAlignment="Stretch"
+                Orientation="Vertical">
+                <TextBlock Style="{StaticResource title}"
+                           Text="Вход в аккаунт"/>
+                <TextBlock Style="{StaticResource normal_text}"
+                           Text="Введите логин"/>
+                <TextBox Style="{StaticResource inp_place}"
+                         Name="LoginInput"/>
+                <TextBlock Style="{StaticResource normal_text}"
+                           Text="Введите пароль"/>
+                <TextBox Style="{StaticResource inp_place}" Name="PasswordInput"/>
+                <Image Source="/icons/logo.png" Width="100" Height="100"/>
+                <Button Style="{StaticResource buttons}"
+                        Content="Войти"/>
+            </StackPanel>
+            
+        </Border>
+        
     </Grid>
 </Window>

@@ -8,19 +8,19 @@
     "net8.0-windows7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\nestr\\.nuget\\packages\\": {}
+    "C:\\Users\\Neoleg\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nestr\\source\\repos\\TaskTracker_KR\\TaskTracker_KR\\TaskTracker_KR.csproj",
+      "projectUniqueName": "\\\\host.lan\\Data\\Documents\\TaskTracker_KR\\TaskTracker_KR\\TaskTracker_KR.csproj",
       "projectName": "TaskTracker_KR",
-      "projectPath": "C:\\Users\\nestr\\source\\repos\\TaskTracker_KR\\TaskTracker_KR\\TaskTracker_KR.csproj",
-      "packagesPath": "C:\\Users\\nestr\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nestr\\source\\repos\\TaskTracker_KR\\TaskTracker_KR\\obj\\",
+      "projectPath": "\\\\host.lan\\Data\\Documents\\TaskTracker_KR\\TaskTracker_KR\\TaskTracker_KR.csproj",
+      "packagesPath": "C:\\Users\\Neoleg\\.nuget\\packages\\",
+      "outputPath": "\\\\host.lan\\Data\\Documents\\TaskTracker_KR\\TaskTracker_KR\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\nestr\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Neoleg\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -46,7 +46,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0-windows7.0": {
@@ -70,7 +70,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.103/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

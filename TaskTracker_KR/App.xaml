@@ -4,6 +4,192 @@
              xmlns:local="clr-namespace:TaskTracker_KR"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!--
+        #F8F9FB - 60
+        #E9EDF2 - 30
+        #B86B6B - 10
+        -->
+        <!--Подложка-->
+        <Style x:Key="background" TargetType="Grid">
+            <Setter Property="Background" Value="#F8F9FB"/>
+        </Style>
+        <!--Левая область-->
+        <Style x:Key="left_side" TargetType="Border">
+            <Setter Property="Background" Value="Black"/>
+        </Style>
+        <!--Кнопки левой области-->
+        <Style x:Key="small_buttons" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="0 10 0 10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="Transparent"
+                                Padding="12 0 0 0"
+                                CornerRadius="8 0 0 8"
+                                BorderThickness="0">
+                            <ContentPresenter
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation 
+                                    AutoReverse="False"
+                                    Duration="0:0:0.5"
+                                    Storyboard.TargetProperty="Background.Color"
+                                    From="Black"
+                                    To="#F8F9FB"/>
+                                <ColorAnimation 
+                                    AutoReverse="False"
+                                    Duration="0:0:0.2"
+                                    Storyboard.TargetProperty="Foreground.Color"
+                                    From="#F8F9FB"
+                                    To="Black"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation 
+                    AutoReverse="False"
+                    Duration="0:0:0.3"
+                    Storyboard.TargetProperty="Background.Color"
+                    From="#F8F9FB"
+                    To="Black"/>
+                                <ColorAnimation 
+                    AutoReverse="False"
+                    Duration="0:0:0.1"
+                    Storyboard.TargetProperty="Foreground.Color"
+                    From="Black"
+                    To="#F8F9FB"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+        
+        <!--Область авторизации-->
+        <Style x:Key="log_in_panel" TargetType="Border">
+            <Setter Property="Margin" Value="60 20 60 20"/>
+            <Setter Property="MaxWidth" Value="900"/>
+            <Setter Property="MaxHeight" Value="700"/>
+            <Setter Property="Background" Value="Red"/>
+        </Style>
+        <Style x:Key="title" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="36"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20"/>
+        </Style>
+
+        <!--Обычный текст-->
+        <Style x:Key="normal_text" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="26 0 0 0"/>
+        </Style>
+        
+        <!--Поле для ввода логин/пароль-->
+        <Style x:Key="inp_place" TargetType="TextBox">
+            <Setter Property="Margin" Value="20"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="BorderThickness" Value="0 0 0 1"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+
+        <Style x:Key="buttons" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="100"/>
+            <Setter Property="FontFamily" Value="Arial"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="Transparent"
+                        CornerRadius="8"
+                        BorderThickness="0">
+                            <ContentPresenter
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Button.MouseEnter">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation 
+                            AutoReverse="False"
+                            Duration="0:0:0.5"
+                            Storyboard.TargetProperty="Background.Color"
+                            From="Black"
+                            To="#F8F9FB"/>
+                                <ColorAnimation 
+                            AutoReverse="False"
+                            Duration="0:0:0.2"
+                            Storyboard.TargetProperty="Foreground.Color"
+                            From="#F8F9FB"
+                            To="Black"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+                <EventTrigger RoutedEvent="Button.MouseLeave">
+                    <EventTrigger.Actions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation 
+            AutoReverse="False"
+            Duration="0:0:0.3"
+            Storyboard.TargetProperty="Background.Color"
+            From="#F8F9FB"
+            To="Black"/>
+                                <ColorAnimation 
+            AutoReverse="False"
+            Duration="0:0:0.1"
+            Storyboard.TargetProperty="Foreground.Color"
+            From="Black"
+            To="#F8F9FB"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger.Actions>
+                </EventTrigger>
+            </Style.Triggers>
+        </Style>
+
     </Application.Resources>
 </Application>

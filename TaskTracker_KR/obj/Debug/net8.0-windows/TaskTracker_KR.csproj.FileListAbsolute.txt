@@ -39,3 +39,5 @@ C:\Users\nestr\source\repos\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windo
 C:\Users\nestr\source\repos\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windows\TaskTracker_KR.pdb
 C:\Users\nestr\source\repos\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windows\TaskTracker_KR.genruntimeconfig.cache
 C:\Users\nestr\source\repos\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windows\ref\TaskTracker_KR.dll
+\\host.lan\Data\Documents\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windows\App.baml
+\\host.lan\Data\Documents\TaskTracker_KR\TaskTracker_KR\obj\Debug\net8.0-windows\TaskTracker_KR.sourcelink.json
