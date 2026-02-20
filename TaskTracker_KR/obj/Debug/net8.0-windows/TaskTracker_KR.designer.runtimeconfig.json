@@ -12,11 +12,10 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\Neoleg\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Neoleg\\.nuget\\packages"
+      "C:\\Users\\nestr\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\nestr\\.nuget\\packages"
     ],
     "configProperties": {
-      "System.Runtime.Serialization.EnableUnsafeBinaryFormatterSerialization": true,
       "CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS": false,
       "Microsoft.NETCore.DotNetHostPolicy.SetAppPaths": true
     }

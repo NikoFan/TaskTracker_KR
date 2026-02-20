@@ -4,16 +4,61 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskTracker_KR"
+        WindowStyle="None"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         MinHeight="430" MinWidth="700">
     <Grid Style="{StaticResource background}">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="120"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <!--Верхняя область для перетаскивания-->
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                MouseLeftButtonDown="DragWindow"
+            Style="{StaticResource sides}">
+            <StackPanel
+                Orientation="Horizontal"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Right">
+                <!--Блок кнопок управления окном-->
+                <Grid>
+                    <StackPanel
+                        Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Margin="10 0 0 0">
+                        <Button Style="{StaticResource window_buttons}"
+                                Click="HideWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/minus-line.png"
+                                Margin="0 12 0 0"/>
+                        </Button>
+                        <Button Style="{StaticResource window_buttons}"
+                                Click="FullSizeWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/square.png"
+                                   Name="FullOpenIcon"/>
+                        </Button>
+                        <Button Style="{StaticResource window_buttons}"
+                                Click="CloseWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/reject.png"/>
+                        </Button>
 
-        <Border Style="{StaticResource left_side}"
+                    </StackPanel>
+                </Grid>
+                
+            </StackPanel>
+        </Border>
+        
+        <!--Левая область-->
+        <Border Style="{StaticResource sides}"
+                Grid.Row="1"
                 Grid.Column="0">
             <Grid>
                 <StackPanel
@@ -23,15 +68,15 @@
                     VerticalAlignment="Top">
                     
                     <Button Style="{StaticResource small_buttons}"
-                            Content="Text">
+                            Content="Просмотр">
                         
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
-                            Content="Text2">
+                            Content="Почта">
 
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
-        Content="Text2">
+                            Content="Задачи">
 
                     </Button>
                     
@@ -40,7 +85,9 @@
         </Border>
         
         
-        <Border Grid.Column="1" Style="{StaticResource log_in_panel}">
+        <Border Grid.Column="1"
+                Grid.Row="1"
+                Style="{StaticResource log_in_panel}">
             <StackPanel 
                 VerticalAlignment="Center"
                 HorizontalAlignment="Stretch"
@@ -54,8 +101,8 @@
                 <TextBlock Style="{StaticResource normal_text}"
                            Text="Введите пароль"/>
                 <TextBox Style="{StaticResource inp_place}" Name="PasswordInput"/>
-                <Image Source="/icons/logo.png" Width="100" Height="100"/>
                 <Button Style="{StaticResource buttons}"
+                        Click="AccountSignIn"
                         Content="Войти"/>
             </StackPanel>
             

@@ -1,0 +1,2 @@
+Insert into "Accounts"
+values (1, 'neoleg', '123', 'nestruev@mail.ru', 'Неструев Олег Денисович', 2, 1)

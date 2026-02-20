@@ -1,0 +1,25 @@
+insert into "DevGroups"
+values(1, 'Мобильная разработка', 0, 0, 0, 'mobileGroup@mail.ru', '{}')
+
+-- Создаем функцию, которая будет выполняться при срабатывании триггера
+CREATE OR REPLACE FUNCTION increment_group_account_count()
+RETURNS TRIGGER AS $$
+BEGIN
+    -- NEW - это специальная запись, содержащая данные вставляемой строки (аккаунта)
+    -- Мы берем group_id из нового аккаунта и обновляем соответствующую группу
+    
+    UPDATE "DevGroups"
+    SET group_count_of_accounts = group_count_of_accounts + 1
+    WHERE group_id = NEW.dev_group_id_fk;
+
+    -- Для триггеров AFTER INSERT возвращаемое значение игнорируется, 
+    -- но по стандарту PL/pgSQL нужно вернуть NEW.
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Создаем триггер на таблице accounts
+CREATE TRIGGER trg_accounts_after_insert
+AFTER INSERT ON "Accounts"          -- Срабатывает ПОСЛЕ успешной вставки строки
+FOR EACH ROW                      -- Для каждой вставленной строки (а не одного запроса)
+EXECUTE FUNCTION increment_group_account_count(); -- Вызывает нашу функцию
