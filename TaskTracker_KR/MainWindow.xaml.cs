@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Data;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -77,63 +78,33 @@ namespace TaskTracker_KR
             this.WindowState = WindowState.Minimized;
         }
 
+        public void ShowNotify(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(
+                "Войдите в аккаунт",
+                "Трекер",
+                MessageBoxButton.OK,
+                MessageBoxImage.Information);
+        }
+     
 
         private async void AccountSignIn(object sender, RoutedEventArgs e)
         {
             try
             {
-                Console.WriteLine("🔄 Начинаю загрузку ролей...");
 
                 var accountExist = await SupabaseHelper.GetCurrentAccount(
                     LoginInput.Text,
                     PasswordInput.Text);
 
-                MessageBox.Show($"📊 Статус: {accountExist}");
-
+                MessageBox.Show($"📊 Статус: {Cookie.currentAccountId}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"❌ ИСКЛЮЧЕНИЕ: {ex.Message}");
-                Console.WriteLine($"📄 Stack: {ex.StackTrace}");
-
                 // Если есть InnerException — выводим тоже
                 if (ex.InnerException != null)
                 {
-                    Console.WriteLine($"📄 Inner: {ex.InnerException.Message}");
-                }
-
-                MessageBox.Show($"Ошибка: {ex.Message}");
-            }
-        }
-
-        private async void GetRoles(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                Console.WriteLine("🔄 Начинаю загрузку ролей...");
-
-                var roles = await SupabaseHelper.GetAllRolesAsync();
-
-                Console.WriteLine($"📊 Получено записей: {roles?.Count ?? 0}");
-
-                // Если данные есть — выводим их
-                foreach (var role in roles)
-                {
-                    Console.WriteLine($"✅ ID: {role.Id}, Title: {role.RoleName}");
-                }
-                MessageBox.Show($"✅ ID: {roles[0].Id}, Title: {roles[0].RoleName}");
-                MessageBox.Show($"✅ ID: {roles[1].Id}, Title: {roles[1].RoleName}");
-                MessageBox.Show($"✅ ID: {roles[2].Id}, Title: {roles[2].RoleName}");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"❌ ИСКЛЮЧЕНИЕ: {ex.Message}");
-                Console.WriteLine($"📄 Stack: {ex.StackTrace}");
-
-                // Если есть InnerException — выводим тоже
-                if (ex.InnerException != null)
-                {
-                    Console.WriteLine($"📄 Inner: {ex.InnerException.Message}");
+                    Console.WriteLine($"📄 InnerException: {ex.InnerException.Message}");
                 }
 
                 MessageBox.Show($"Ошибка: {ex.Message}");

@@ -25,6 +25,7 @@
                 MouseLeftButtonDown="DragWindow"
             Style="{StaticResource sides}">
             <StackPanel
+                Margin="0 0 20 0"
                 Orientation="Horizontal"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Right">
@@ -68,14 +69,17 @@
                     VerticalAlignment="Top">
                     
                     <Button Style="{StaticResource small_buttons}"
+                            Click="ShowNotify"
                             Content="Просмотр">
                         
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
+                            Click="ShowNotify"
                             Content="Почта">
 
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
+                            Click="ShowNotify"
                             Content="Задачи">
 
                     </Button>

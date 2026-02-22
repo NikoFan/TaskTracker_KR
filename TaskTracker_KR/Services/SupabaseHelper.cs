@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Serilog;
+using TaskTracker_KR.Properties;
 using TaskTracker_KR.Models;       // Наша модель TaskItem
 
 namespace TaskTracker_KR.Services
@@ -61,13 +63,19 @@ namespace TaskTracker_KR.Services
                 throw new InvalidOperationException("Supabase client not initialized.");
             var response = await Client
                 .From<Account>()
+                .Select("account_id")
                 .Where(x => x.Login == inputLogin)
                 .Where(x => x.Password == inputPassword)
                 .Single();
-
-            Console.WriteLine("RESPONSE: " + response);
+            Log.Information($"response: {response?.ToString()}");
+            
             if (response == null)
+            {
+                Cookie.currentAccountId = -1;
                 return false;
+            }
+                
+            Cookie.currentAccountId = response.Id;
             return true;
         }
 

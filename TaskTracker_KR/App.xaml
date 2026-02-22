@@ -43,9 +43,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="Transparent"
-                                CornerRadius="8"
-                                BorderThickness="0">
+                                BorderBrush="Transparent">
                             <ContentPresenter
                                 HorizontalAlignment="Center"
                                 VerticalAlignment="Center"/>
@@ -101,9 +99,7 @@
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
                                 BorderBrush="Transparent"
-                                Padding="12 0 0 0"
-                                CornerRadius="0"
-                                BorderThickness="0">
+                                Padding="12 0 0 0">
                             <ContentPresenter
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"/>
@@ -206,9 +202,7 @@
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
                         <Border Background="{TemplateBinding Background}"
-                        BorderBrush="Transparent"
-                        CornerRadius="0"
-                        BorderThickness="0">
+                        BorderBrush="Transparent">
                             <ContentPresenter
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"/>
