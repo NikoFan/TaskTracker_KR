@@ -254,5 +254,11 @@
             </Style.Triggers>
         </Style>
 
+        <!--Данны аккаунта-->
+        <Style x:Key="account_panel" TargetType="Border">
+            <Setter Property="Margin" Value="30"/>
+            <Setter Property="Background" Value="Transparent"/>
+        </Style>
+
     </Application.Resources>
 </Application>

@@ -35,6 +35,8 @@ namespace TaskTracker_KR.Models
         [Column("account_role_fk")]
         public int Role_FK { get; set; }
 
+        public Role Role { get; set; }
+
         // Разрешение на отправку сообщений
         [Column("dev_group_id_fk")]
         public int Group_FK { get; set; }

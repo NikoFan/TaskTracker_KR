@@ -67,23 +67,22 @@
                     Orientation="Vertical"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top">
-                    
                     <Button Style="{StaticResource small_buttons}"
                             Click="ShowNotify"
                             Content="Просмотр">
-                        
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
                             Click="ShowNotify"
                             Content="Почта">
-
                     </Button>
                     <Button Style="{StaticResource small_buttons}"
                             Click="ShowNotify"
                             Content="Задачи">
-
                     </Button>
-                    
+                    <Button Style="{StaticResource small_buttons}"
+                            Click="ShowNotify"
+                            Content="Мои задачи">
+                    </Button>
                 </StackPanel>
             </Grid>
         </Border>

@@ -22,12 +22,19 @@ namespace TaskTracker_KR
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WindowState _previousWindowState = WindowState.Normal;
+        private WindowState _previousWindowState = Cookie.windowState;
         public MainWindow()
         {
             InitializeComponent();
+            this.WindowState = _previousWindowState;
+
+            // Изменение иконки кнопки на требуемую (по состоянию окна)
+            SameActions.ControlWindowStateStatus(
+                this.WindowState,
+                FullOpenIcon);
         }
 
+        // Перетаскивание окна
         public void DragWindow(object sender, RoutedEventArgs e)
         {
             try
@@ -36,19 +43,20 @@ namespace TaskTracker_KR
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error drug window\n{ex.Message}");
+                MessageBox.Show($"Error drag window\n{ex.Message}");
             }
         }
+        // Закрытие окна
         public void CloseWindow(object sender, RoutedEventArgs e)
         {
-            if ((MessageBox.Show(
-                "Выйти из приложения?",
-                "Трекер", 
-                MessageBoxButton.YesNo, 
-                MessageBoxImage.Question) == MessageBoxResult.Yes))
+            if (SameActions.SendCustomMessageBox(
+                    "Вы точно хотите закрыть приложение?",
+                    MessageBoxImage.Question,
+                    true)
+                )
                 Environment.Exit(0);
         }
-
+        // Изменить размер окна
         public void FullSizeWindow(object sender, RoutedEventArgs e)
         {
             BitmapImage icon = new BitmapImage();
@@ -57,22 +65,21 @@ namespace TaskTracker_KR
             {
                 // Если уже развернуто → восстанавливаем
                 this.WindowState = WindowState.Normal;
-                
                 icon.UriSource = new Uri("/icons/square.png", UriKind.RelativeOrAbsolute);
                 
             }
             else
             {
                 // Если нормально → запоминаем состояние и разворачиваем
-                _previousWindowState = this.WindowState;
                 this.WindowState = WindowState.Maximized;
                 icon.UriSource = new Uri("/icons/double_square.png", UriKind.RelativeOrAbsolute);
             }
-            
+            // Установка состояния окна в кэш
+            Cookie.windowState = this.WindowState;
             icon.EndInit();
             FullOpenIcon.Source = icon;
         }
-
+        // Свернуть окно
         public void HideWindow(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
@@ -80,10 +87,8 @@ namespace TaskTracker_KR
 
         public void ShowNotify(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(
+           SameActions.SendCustomMessageBox(
                 "Войдите в аккаунт",
-                "Трекер",
-                MessageBoxButton.OK,
                 MessageBoxImage.Information);
         }
      
@@ -92,12 +97,20 @@ namespace TaskTracker_KR
         {
             try
             {
-
+                // Авторизация пользователя
                 var accountExist = await SupabaseHelper.GetCurrentAccount(
                     LoginInput.Text,
                     PasswordInput.Text);
-
-                MessageBox.Show($"📊 Статус: {Cookie.currentAccountId}");
+                SameActions.SendCustomMessageBox(
+                    $"Результат авторизации: {(Cookie.currentAccountId == -1 ? "Неверные данные": "Авторизован")}",
+                    Cookie.currentAccountId == -1 ? MessageBoxImage.Stop : MessageBoxImage.Information);
+                // Открытие окна
+                if (Cookie.currentAccountId != -1)
+                    SameActions.OpenNextWindowInterface<HomeWindow>(
+                        this,
+                        this.Left,
+                        this.Top);
+                return;
             }
             catch (Exception ex)
             {
@@ -106,7 +119,6 @@ namespace TaskTracker_KR
                 {
                     Console.WriteLine($"📄 InnerException: {ex.InnerException.Message}");
                 }
-
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }

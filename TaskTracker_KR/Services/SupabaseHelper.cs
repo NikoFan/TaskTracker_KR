@@ -1,12 +1,15 @@
-﻿using Supabase;                    // Основной клиент Supabase
+﻿using Serilog;
+using Supabase;                    // Основной клиент Supabase
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Models;
+using Supabase.Postgrest.Exceptions;
 using System.Text;
 using System.Threading.Tasks;
-using Serilog;
-using TaskTracker_KR.Properties;
 using TaskTracker_KR.Models;       // Наша модель TaskItem
+using TaskTracker_KR.Properties;
 
 namespace TaskTracker_KR.Services
 {
@@ -47,7 +50,6 @@ namespace TaskTracker_KR.Services
             var response = await Client
                 .From<Role>()
                 .Get();         // Выполняем SELECT
-
             // Возвращаем список моделей (или пустой список, если null)
             return response?.Models ?? new List<Role>();
         }
@@ -68,17 +70,40 @@ namespace TaskTracker_KR.Services
                 .Where(x => x.Password == inputPassword)
                 .Single();
             Log.Information($"response: {response?.ToString()}");
-            
             if (response == null)
             {
                 Cookie.currentAccountId = -1;
                 return false;
-            }
-                
+            }  
             Cookie.currentAccountId = response.Id;
             return true;
         }
 
-
+        /// <summary>
+        /// Получение данных accounts + roles
+        /// </summary>
+        public static async Task<Account> GetAccountApprovals()
+        {
+            try
+            {
+                return await Client
+                    .From<Account>()
+                    .Select("*, role:Roles(role_name, create_approval, accept_approval, work_approval, look_approval, send_approval)")
+                    .Where(x => x.Id == Cookie.currentAccountId)
+                    .Single();             // Бросает exception если не найдено
+            }
+            catch (PostgrestException ex)
+            {
+                // Ошибка RLS, синтаксиса запроса и т.д.
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                throw; // Пробрасываем дальше, чтобы приложение могло обработать
+            }
+            catch (Exception ex)
+            {
+                // Сетевые ошибки, таймауты
+                Console.WriteLine($"Connection error: {ex.Message}");
+                throw;
+            }
+        }
     }
 }

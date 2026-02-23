@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "62uri11EIzk=",
+  "dgSpecHash": "CrUWLJmyEZQ=",
   "success": true,
   "projectFilePath": "C:\\Users\\nestr\\source\\repos\\TaskTracker_KR\\TaskTracker_KR\\TaskTracker_KR.csproj",
   "expectedPackageFiles": [
@@ -43,7 +43,7 @@
     "C:\\Users\\nestr\\.nuget\\packages\\supabase.core\\1.0.0\\supabase.core.1.0.0.nupkg.sha512",
     "C:\\Users\\nestr\\.nuget\\packages\\supabase.functions\\2.0.0\\supabase.functions.2.0.0.nupkg.sha512",
     "C:\\Users\\nestr\\.nuget\\packages\\supabase.gotrue\\6.0.3\\supabase.gotrue.6.0.3.nupkg.sha512",
-    "C:\\Users\\nestr\\.nuget\\packages\\supabase.postgrest\\4.0.3\\supabase.postgrest.4.0.3.nupkg.sha512",
+    "C:\\Users\\nestr\\.nuget\\packages\\supabase.postgrest\\4.1.0\\supabase.postgrest.4.1.0.nupkg.sha512",
     "C:\\Users\\nestr\\.nuget\\packages\\supabase.realtime\\7.0.2\\supabase.realtime.7.0.2.nupkg.sha512",
     "C:\\Users\\nestr\\.nuget\\packages\\supabase.storage\\2.0.2\\supabase.storage.2.0.2.nupkg.sha512",
     "C:\\Users\\nestr\\.nuget\\packages\\system.appcontext\\4.3.0\\system.appcontext.4.3.0.nupkg.sha512",

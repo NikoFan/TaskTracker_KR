@@ -21,22 +21,22 @@ namespace TaskTracker_KR.Models
 
         // Разрешение на создание задачи
         [Column("create_approval")]
-        public string? CreateApproval { get; set; }
+        public bool CreateApproval { get; set; }
 
         // Разрешение на зачет задачи
         [Column("accept_approval")]
-        public string? AceptApproval { get; set; }
+        public bool AcceptApproval { get; set; }
 
         // Разрешение на работу над задачами
         [Column("work_approval")]
-        public string? WorkApproval { get; set; }
+        public bool WorkApproval { get; set; }
 
         // Разрешение на просмотр статистики
         [Column("look_approval")]
-        public string? LookApproval { get; set; }
+        public bool LookApproval { get; set; }
 
         // Разрешение на отправку сообщений
         [Column("send_approval")]
-        public string? SendApproval { get; set; }
+        public bool SendApproval { get; set; }
     }
 }

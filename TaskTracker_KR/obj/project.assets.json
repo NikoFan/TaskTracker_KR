@@ -562,7 +562,7 @@
           }
         }
       },
-      "Supabase.Postgrest/4.0.3": {
+      "Supabase.Postgrest/4.1.0": {
         "type": "package",
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
@@ -2475,10 +2475,10 @@
         "supabase.gotrue.nuspec"
       ]
     },
-    "Supabase.Postgrest/4.0.3": {
-      "sha512": "hpDIh+E5bDgZiHMuM6l+RDm9WWlt/T3fXXFQoqzlsrJFesFMNzkK9feVBG5egJyL/OlwmxuLsnPkR7O+bV3Vcw==",
+    "Supabase.Postgrest/4.1.0": {
+      "sha512": "DwgBVeU3Xjo1pr7vJ7EiTEHFHa7bN4CwOvsiDqTFfT5Q8Dq1Ok/KT7P6XUbs578zYA2uQb7II8TLo0dfv6Qx5g==",
       "type": "package",
-      "path": "supabase.postgrest/4.0.3",
+      "path": "supabase.postgrest/4.1.0",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -2486,7 +2486,7 @@
         "icon.png",
         "lib/netstandard2.0/Supabase.Postgrest.dll",
         "lib/netstandard2.0/Supabase.Postgrest.xml",
-        "supabase.postgrest.4.0.3.nupkg.sha512",
+        "supabase.postgrest.4.1.0.nupkg.sha512",
         "supabase.postgrest.nuspec"
       ]
     },
@@ -5585,7 +5585,8 @@
     "net8.0-windows7.0": [
       "DotNetEnv >= 3.1.1",
       "Serilog >= 4.3.1",
-      "Supabase >= 1.1.1"
+      "Supabase >= 1.1.1",
+      "Supabase.Postgrest >= 4.1.0"
     ]
   },
   "packageFolders": {
@@ -5644,6 +5645,10 @@
           "Supabase": {
             "target": "Package",
             "version": "[1.1.1, )"
+          },
+          "Supabase.Postgrest": {
+            "target": "Package",
+            "version": "[4.1.0, )"
           }
         },
         "imports": [

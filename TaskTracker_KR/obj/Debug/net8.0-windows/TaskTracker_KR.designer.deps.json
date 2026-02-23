@@ -309,7 +309,7 @@
           "Supabase.Core": "1.0.0",
           "Supabase.Functions": "2.0.0",
           "Supabase.Gotrue": "6.0.3",
-          "Supabase.Postgrest": "4.0.3",
+          "Supabase.Postgrest": "4.1.0",
           "Supabase.Realtime": "7.0.2",
           "Supabase.Storage": "2.0.2"
         },
@@ -353,15 +353,15 @@
           }
         }
       },
-      "Supabase.Postgrest/4.0.3": {
+      "Supabase.Postgrest/4.1.0": {
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "Supabase.Core": "1.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/Supabase.Postgrest.dll": {
-            "assemblyVersion": "4.0.3.0",
-            "fileVersion": "4.0.3.0"
+            "assemblyVersion": "4.1.0.0",
+            "fileVersion": "4.1.0.0"
           }
         }
       },
@@ -369,7 +369,7 @@
         "dependencies": {
           "Newtonsoft.Json": "13.0.3",
           "Supabase.Core": "1.0.0",
-          "Supabase.Postgrest": "4.0.3",
+          "Supabase.Postgrest": "4.1.0",
           "Websocket.Client": "5.1.1"
         },
         "runtime": {
@@ -1113,12 +1113,12 @@
       "path": "supabase.gotrue/6.0.3",
       "hashPath": "supabase.gotrue.6.0.3.nupkg.sha512"
     },
-    "Supabase.Postgrest/4.0.3": {
+    "Supabase.Postgrest/4.1.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-hpDIh+E5bDgZiHMuM6l+RDm9WWlt/T3fXXFQoqzlsrJFesFMNzkK9feVBG5egJyL/OlwmxuLsnPkR7O+bV3Vcw==",
-      "path": "supabase.postgrest/4.0.3",
-      "hashPath": "supabase.postgrest.4.0.3.nupkg.sha512"
+      "sha512": "sha512-DwgBVeU3Xjo1pr7vJ7EiTEHFHa7bN4CwOvsiDqTFfT5Q8Dq1Ok/KT7P6XUbs578zYA2uQb7II8TLo0dfv6Qx5g==",
+      "path": "supabase.postgrest/4.1.0",
+      "hashPath": "supabase.postgrest.4.1.0.nupkg.sha512"
     },
     "Supabase.Realtime/7.0.2": {
       "type": "package",
