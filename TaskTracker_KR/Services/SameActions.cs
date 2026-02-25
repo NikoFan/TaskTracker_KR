@@ -53,6 +53,26 @@ namespace TaskTracker_KR.Services
         }
 
         /// <summary>
+        /// Метод изменения размеров окна по нажатию кнопки
+        /// </summary>
+        /// <param name="pastWindowState">Текущий размер окна</param>
+        /// <param name="fullOpenIcon">Иконка кнопки раскрытия окна</param>
+        /// 
+        public static void ResizeWindowState(
+            Window pastWindowState,
+            Image fullOpenIcon)
+        {
+            if (pastWindowState.WindowState == WindowState.Maximized)
+                // Из раскрытого -> в обычное
+                pastWindowState.WindowState = WindowState.Normal;
+            else
+                // Из обычного -> в раскрытое
+                pastWindowState.WindowState = WindowState.Maximized;
+            Cookie.windowState = pastWindowState.WindowState;
+            ControlWindowStateStatus(pastWindowState.WindowState, fullOpenIcon);
+        }
+
+        /// <summary>
         /// Открывание окна интерфейса
         /// </summary>
         /// <param name="oldWindow">Старое окно</param>

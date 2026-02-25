@@ -156,6 +156,7 @@
             <Setter Property="Margin" Value="30"/>
             <Setter Property="MaxWidth" Value="900"/>
             <Setter Property="MaxHeight" Value="700"/>
+            <Setter Property="Padding" Value="10"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
         <!--Заголовки-->
@@ -178,6 +179,17 @@
         
         <!--Поле для ввода логин/пароль-->
         <Style x:Key="inp_place" TargetType="TextBox">
+            <Setter Property="Margin" Value="100 10 100 10"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Foreground" Value="#1F2937"/>
+            <Setter Property="BorderBrush" Value="#B8C5D6"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
+
+        <!--Поле для ввода логин/пароль-->
+        <Style x:Key="rich_inp_place" TargetType="RichTextBox">
             <Setter Property="Margin" Value="100 10 100 10"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Background" Value="Transparent"/>

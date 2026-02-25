@@ -22,11 +22,11 @@ namespace TaskTracker_KR
     /// </summary>
     public partial class MainWindow : Window
     {
-        private WindowState _previousWindowState = Cookie.windowState;
         public MainWindow()
         {
             InitializeComponent();
-            this.WindowState = _previousWindowState;
+            
+            this.WindowState = Cookie.windowState;
 
             // Изменение иконки кнопки на требуемую (по состоянию окна)
             SameActions.ControlWindowStateStatus(
@@ -55,35 +55,18 @@ namespace TaskTracker_KR
                     true)
                 )
                 Environment.Exit(0);
+            else
+                SameActions.OpenNextWindowInterface<CreateTaskWindow>(
+                        this,
+                        this.Left,
+                        this.Top);
         }
         // Изменить размер окна
-        public void FullSizeWindow(object sender, RoutedEventArgs e)
-        {
-            BitmapImage icon = new BitmapImage();
-            icon.BeginInit();
-            if (this.WindowState == WindowState.Maximized)
-            {
-                // Если уже развернуто → восстанавливаем
-                this.WindowState = WindowState.Normal;
-                icon.UriSource = new Uri("/icons/square.png", UriKind.RelativeOrAbsolute);
-                
-            }
-            else
-            {
-                // Если нормально → запоминаем состояние и разворачиваем
-                this.WindowState = WindowState.Maximized;
-                icon.UriSource = new Uri("/icons/double_square.png", UriKind.RelativeOrAbsolute);
-            }
-            // Установка состояния окна в кэш
-            Cookie.windowState = this.WindowState;
-            icon.EndInit();
-            FullOpenIcon.Source = icon;
-        }
+        public void FullSizeWindow(object sender, RoutedEventArgs e) => 
+            SameActions.ResizeWindowState(mainWindow, FullOpenIcon);
         // Свернуть окно
-        public void HideWindow(object sender, RoutedEventArgs e)
-        {
+        public void HideWindow(object sender, RoutedEventArgs e) => 
             this.WindowState = WindowState.Minimized;
-        }
 
         public void ShowNotify(object sender, RoutedEventArgs e)
         {
