@@ -13,7 +13,7 @@
     ],
     "additionalProbingPaths": [
       "C:\\Users\\nestr\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\Neoleg\\.nuget\\packages"
+      "C:\\Users\\nestr\\.nuget\\packages"
     ],
     "configProperties": {
       "CSWINRT_USE_WINDOWS_UI_XAML_PROJECTIONS": false,
