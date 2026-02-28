@@ -7,7 +7,8 @@
         WindowStyle="None"
         mc:Ignorable="d"
         Name="createTaskWindow"
-        Title="CreateTaskWindow" Height="450" Width="800">
+        Title="CreateTaskWindow" Height="450" Width="800"
+        MinHeight="430" MinWidth="700">
     <Grid Style="{StaticResource background}">
 
         <Grid.ColumnDefinitions>
@@ -105,15 +106,11 @@
         <Border Grid.Column="1"
             Grid.Row="1"
             Style="{StaticResource log_in_panel}">
-            <!--<StackPanel 
-                VerticalAlignment="Center"
-                HorizontalAlignment="Stretch"
-                Orientation="Vertical">
-            </StackPanel>-->
             <ScrollViewer>
                 <StackPanel
                     VerticalAlignment="Stretch"
                     Margin="20 0 0 0"
+                    
                     HorizontalAlignment="Stretch"
                     Orientation="Vertical">
                     <TextBlock Style="{StaticResource title}"
@@ -131,7 +128,15 @@
                     <TextBlock Style="{StaticResource normal_text}"
                                Text="Укажите дату проверки"/>
                     <Calendar x:Name="ChooseDateCalendar"
-                              SelectedDatesChanged="ChooseDateCalendar_SelectedDatesChanged"/>
+                              SelectedDatesChanged="ChooseDateCalendar_SelectedDatesChanged">
+                        <Calendar.LayoutTransform>
+                            <TransformGroup>
+                                <ScaleTransform
+                                    ScaleX="1.5"
+                                    ScaleY="1.5"/>
+                            </TransformGroup>
+                        </Calendar.LayoutTransform>
+                    </Calendar>
                     <TextBlock Style="{StaticResource normal_text}"
                                Name="TaskCreateDateTextBlock"
                                Text="Дата создания: "/>

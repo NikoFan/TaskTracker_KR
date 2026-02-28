@@ -22,16 +22,20 @@ namespace TaskTracker_KR
     public partial class CreateTaskWindow : Window
     {
         private DispatcherTimer _timer;
+        // Минимальная дата - завтра
+        private DateTime minimalDateTomorrow = DateTime.Today.AddDays(1);
         public CreateTaskWindow()
         {
             InitializeComponent();
             this.WindowState = Cookie.windowState;
-            // Установка выбранной датой - сегодня
-            DateTime tomorrow = DateTime.Today.AddDays(1);
-            ChooseDateCalendar.SelectedDate = tomorrow;
+            
+            
+            // Установка завтрашней даты как начальной
+            ChooseDateCalendar.SelectedDate = minimalDateTomorrow;
 
             _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(300); // 300 мс
+            // Тик раз в 300 мс
+            _timer.Interval = TimeSpan.FromMilliseconds(300);
             _timer.Tick += Timer_Tick;
             _timer.Start();
             
@@ -41,44 +45,46 @@ namespace TaskTracker_KR
                 this.WindowState,
                 FullOpenIcon);
         }
-        private void Timer_Tick(object sender, EventArgs e)
-        {
+
+        // Действие при тике таймера
+        private void Timer_Tick(object sender, EventArgs e) => 
             UpdateDateTime();
-        }
+
+        // Обновление поля с датой
         private void UpdateDateTime()
         {
-            TaskCreateDateTextBlock.Text = ChooseDateCalendar.SelectedDate != null ? ChooseDateCalendar.SelectedDate.Value.ToString() : "Дата не выбрана";
+            TaskEndDateTextBlock.Text = "Дата сдачи:\n " + (ChooseDateCalendar.SelectedDate != null ? ChooseDateCalendar.SelectedDate.Value.ToString("dd/MM/yyyy") : "Дата не выбрана");
+            TaskCreateDateTextBlock.Text = "Дата регистрации:\n " + DateTime.Today.ToString("dd/MM/yyyy");
         }
+
+
+        // Проверка изменений в календаре
         private void ChooseDateCalendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             if (ChooseDateCalendar.SelectedDate.HasValue)
             {
                 DateTime selectedDate = ChooseDateCalendar.SelectedDate.Value;
 
-                // 🔹 Минимальная дата — ЗАВТРА
-                DateTime minDate = DateTime.Today.AddDays(1);
-
-                if (selectedDate < minDate)
+                // ВЫбранная дата раньше минимальнйо
+                if (selectedDate < minimalDateTomorrow)
                 {
-                    MessageBox.Show(
+                    SameActions.SendCustomMessageBox(
                         $"⚠️ Минимальная дата — завтра!\n\n" +
                         $"Вы выбрали: {selectedDate:dd.MM.yyyy}\n" +
-                        $"Минимальная дата: {minDate:dd.MM.yyyy}",
-                        "Ошибка выбора даты",
-                        MessageBoxButton.OK,
-                        MessageBoxImage.Warning
-                    );
+                        $"Минимальная дата: {minimalDateTomorrow:dd.MM.yyyy}",
+                        MessageBoxImage.Exclamation
+                        );
 
                     // Сбрасываем на завтра
-                    ChooseDateCalendar.SelectedDate = minDate;
+                    ChooseDateCalendar.SelectedDate = minimalDateTomorrow;
                 }
             }
 
             UpdateDateTime();
         }
 
-
-        private void Window_Closed(object sender, EventArgs e)
+        // Ручная остановка таймера
+        private void StopTimerTick()
         {
             _timer.Stop();
             _timer.Tick -= Timer_Tick;
@@ -105,8 +111,7 @@ namespace TaskTracker_KR
                     true)
                 )
             {
-                _timer.Stop();
-                _timer.Tick -= Timer_Tick;
+                StopTimerTick();
                 Environment.Exit(0);
             }
                 
