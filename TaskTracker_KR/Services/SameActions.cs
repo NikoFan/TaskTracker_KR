@@ -1,5 +1,4 @@
-﻿using Supabase.Gotrue.Mfa;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
+using TaskTracker_KR.Models;
 
 namespace TaskTracker_KR.Services
 {
@@ -110,5 +110,33 @@ namespace TaskTracker_KR.Services
                 buttons == null ? MessageBoxButton.OK : MessageBoxButton.YesNo,
                 icon) == MessageBoxResult.Yes;
         }
+
+
+        /// <summary>
+        /// Установка в ComboBox данных о программистах из группы
+        /// </summary>
+        /// <param name="progList">Список программистов</param>
+        /// <param name="combobox">Выпаадющий список</param>
+        public static void PutProgrammersList(
+            List<ProgrammerBusyInfo> progList,
+            ComboBox combobox)
+        {
+            foreach (var element in progList)
+            {
+                combobox.Items.Add(new ProgrammersBusyToCombobox(
+                    element.ProgrammerId,
+                    element.ProgrammerName,
+                    element.IsBusy).ToString());
+            }
+        }
+    }
+
+    // Модель для установки текста в выпадающий список
+    public class ProgrammersBusyToCombobox(long id, string name, bool status)  // Со скобками
+    {
+        public long ProgrammerId { get; set; } = id;
+        public string ProgrammerName { get; set; } = name;
+        public bool ProgrammerStatus { get; set; } = status;
+        public override string ToString() => $"{ProgrammerId}. {ProgrammerName} | Статус: {(ProgrammerStatus ? "Занят" : "Свободен")}";
     }
 }

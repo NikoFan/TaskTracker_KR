@@ -1,4 +1,45 @@
 Insert into "Accounts"
 values (1, 'neoleg', '123', 'nestruev@mail.ru', 'Неструев Олег Денисович', 2, 1)
 (2, 'user2', '123', 'nestruev@mail.ru', 'Макеев Дмитрий Сергеевич', 3, 1),
-(3, 'user3', '123', 'nestruev@mail.ru', 'Чижов Константин Сергеевич', 1, 1)
+(3, 'user3', '123', 'nestruev@mail.ru', 'Чижов Константин Сергеевич', 1, 1),
+(4, 'user4', '123', 'nestruev@mail.ru', 'Гавриченко Даниил Валентинович', 1, 1),
+(5, 'user5', '123', 'nestruev@mail.ru', 'Филатов Константин Александрович', 1, 1),
+(6, 'user6', '123', 'nestruev@mail.ru', 'Иванов Иван Иванович', 1, 1),
+(7, 'user7', '123', 'nestruev@mail.ru', 'Иванов Сергей Иванович', 2, 1),
+(8, 'user8', '123', 'nestruev@mail.ru', 'Иванов Андрей Иванович', 3, 1)
+
+
+-- Получение программистов и их занятости
+CREATE OR REPLACE FUNCTION get_available_programmers(
+    p_manager_id INT
+)
+RETURNS TABLE (
+    programmer_id INT8,
+    programmer_name TEXT,
+    is_busy BOOL
+) AS $$
+BEGIN
+    RETURN QUERY
+    SELECT 
+        a.account_id AS programmer_id,
+        a.account_name AS programmer_name,
+        EXISTS (
+            SELECT 1 
+            FROM "Tasks" t 
+            WHERE t."account_employee_FK" = a.account_id 
+              AND t.task_status = true
+        ) AS is_busy
+    FROM "Accounts" a
+    WHERE 
+        a.dev_group_id_fk = (
+            SELECT dev_group_id_fk 
+            FROM "Accounts" 
+            WHERE account_id = p_manager_id
+        )
+        AND a.account_role_fk = 1
+        AND a.account_id != p_manager_id
+    ORDER BY 
+        is_busy ASC,
+        programmer_name ASC;
+END;
+$$ LANGUAGE plpgsql;

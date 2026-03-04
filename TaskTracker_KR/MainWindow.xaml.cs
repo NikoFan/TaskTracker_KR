@@ -55,11 +55,7 @@ namespace TaskTracker_KR
                     true)
                 )
                 Environment.Exit(0);
-            else
-                SameActions.OpenNextWindowInterface<CreateTaskWindow>(
-                        this,
-                        this.Left,
-                        this.Top);
+                
         }
         // Изменить размер окна
         public void FullSizeWindow(object sender, RoutedEventArgs e) => 

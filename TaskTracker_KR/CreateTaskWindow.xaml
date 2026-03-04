@@ -143,8 +143,12 @@
                     <TextBlock Style="{StaticResource normal_text}"
                                Name="TaskEndDateTextBlock"
                                Text="Дата сдачи: "/>
+                    <TextBlock Style="{StaticResource normal_text}"
+                               Text="Выберите работника"/>
+                    <ComboBox Name="ProgrammersList"/>
 
-                    <Button Style="{StaticResource buttons}" Content="Создать"/>
+                    <Button Style="{StaticResource buttons}"
+                            Content="Создать"/>
                 </StackPanel>
                 
             </ScrollViewer>

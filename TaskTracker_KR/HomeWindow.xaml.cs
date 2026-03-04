@@ -60,6 +60,15 @@ namespace TaskTracker_KR
             SameActions.SetLeftSideButtonsEnableStatus([WorkButton, LookButton, ChatButton, CreateButton, AcceptButton]);
 
         }
+
+        public void CreateTaskClick(object sender, RoutedEventArgs e)
+        {
+            SameActions.OpenNextWindowInterface<CreateTaskWindow>(
+                        this,
+                        this.Left,
+                        this.Top);
+        }
+
         // Перетаскивание окна
         public void DragWindow(object sender, RoutedEventArgs e)
         {

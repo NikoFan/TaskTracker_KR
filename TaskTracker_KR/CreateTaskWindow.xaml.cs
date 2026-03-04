@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using TaskTracker_KR.Models;
 using TaskTracker_KR.Services;
 
 namespace TaskTracker_KR
@@ -44,7 +45,20 @@ namespace TaskTracker_KR
             SameActions.ControlWindowStateStatus(
                 this.WindowState,
                 FullOpenIcon);
+
+            SetInfoToCombobox();
+
+
         }
+
+        // Установка данных в Combobox
+        private async void SetInfoToCombobox()
+        {
+            var progList = await SupabaseHelper.GetAvailableProgrammersAsync();
+            SameActions.PutProgrammersList(progList, ProgrammersList);
+        }
+
+
 
         // Действие при тике таймера
         private void Timer_Tick(object sender, EventArgs e) => 

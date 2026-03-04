@@ -105,5 +105,50 @@ namespace TaskTracker_KR.Services
                 throw;
             }
         }
+
+
+        /// <summary>
+        /// Получение списка ФИО и id исполнителей
+        /// </summary>
+        public static async Task<List<ProgrammerBusyInfo>> GetAvailableProgrammersAsync()
+        {
+            try
+            {
+                // В версии 4.1.0 Rpc возвращает ОДИН объект
+                // Для RETURNS TABLE нужно использовать List<Dictionary> как тип
+                var response = await Client.Postgrest
+                    .Rpc<List<Dictionary<string, object>>>(
+                        "get_available_programmers",
+                        new { p_manager_id = Cookie.currentAccountId });
+
+                // Конвертируем в типизированный список
+                var programmers = new List<ProgrammerBusyInfo>();
+
+                if (response != null)
+                {
+                    foreach (var dict in response)
+                    {
+                        programmers.Add(new ProgrammerBusyInfo
+                        {
+                            ProgrammerId = Convert.ToInt64(dict["programmer_id"]),
+                            ProgrammerName = dict["programmer_name"]?.ToString() ?? string.Empty,
+                            IsBusy = Convert.ToBoolean(dict["is_busy"])
+                        });
+                    }
+                }
+
+                return programmers;
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Connection error: {ex.Message}");
+                throw;
+            }
+        }
     }
 }
