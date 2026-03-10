@@ -29,8 +29,12 @@ namespace TaskTracker_KR
         {
             InitializeComponent();
             this.WindowState = Cookie.windowState;
-            
-            
+            // Изменение иконки кнопки на требуемую (по состоянию окна)
+            SameActions.ControlWindowStateStatus(
+                this.WindowState,
+                FullOpenIcon);
+
+
             // Установка завтрашней даты как начальной
             ChooseDateCalendar.SelectedDate = minimalDateTomorrow;
 
@@ -39,16 +43,11 @@ namespace TaskTracker_KR
             _timer.Interval = TimeSpan.FromMilliseconds(300);
             _timer.Tick += Timer_Tick;
             _timer.Start();
-            
-
-            // Изменение иконки кнопки на требуемую (по состоянию окна)
-            SameActions.ControlWindowStateStatus(
-                this.WindowState,
-                FullOpenIcon);
 
             SetInfoToCombobox();
 
-
+            // Установка разрешений для кнопок
+            SameActions.SetLeftSideButtonsEnableStatus([WorkButton, LookButton, ChatButton, CreateButton, AcceptButton]);
         }
 
         // Установка данных в Combobox
@@ -137,11 +136,14 @@ namespace TaskTracker_KR
         public void HideWindow(object sender, RoutedEventArgs e) =>
             this.WindowState = WindowState.Minimized;
 
-        public void ShowNotify(object sender, RoutedEventArgs e)
-        {
+        public void ShowNotify(object sender, RoutedEventArgs e) =>
             SameActions.SendCustomMessageBox(
                  "Войдите в аккаунт",
                  MessageBoxImage.Information);
-        }
+        
+
+        private void BackToMainWindow(object sender, RoutedEventArgs e) =>
+            SameActions.OpenNextWindowInterface<HomeWindow>(this,this.Left,this.Top);
+        
     }
 }

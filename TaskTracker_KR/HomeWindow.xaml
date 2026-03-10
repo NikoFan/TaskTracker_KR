@@ -72,32 +72,30 @@
                             Click="ShowNotify"
                             Uid="look"
                             Name="LookButton"
-                            Content="Просмотр">
-                    </Button>
+                            Content="Просмотр"/>
+
                     <Button Style="{StaticResource small_buttons}"
-                            Click="ShowNotify"
+                            Click="EmailShowerClick"
                             Name="ChatButton"
                             Uid="send"
-                            Content="Почта">
-                    </Button>
+                            Content="Почта"/>
+
                     <Button Style="{StaticResource small_buttons}"
                             Click="CreateTaskClick"
                             Name="CreateButton"
                             Uid="create"
-                            Content="Создать">
-                    </Button>
+                            Content="Создать"/>
+
                     <Button Style="{StaticResource small_buttons}"
                             Click="ShowNotify"
                             Name="WorkButton"
                             Uid="work"
-                            Content="Мои задачи">
-                    </Button>
+                            Content="Мои задачи"/>
                     <Button Style="{StaticResource small_buttons}"
                             Click="ShowNotify"
                             Name="AcceptButton"
                             Uid="accept"
-                            Content="Проверить">
-                    </Button>
+                            Content="Проверить"/>
                 </StackPanel>
             </Grid>
         </Border>

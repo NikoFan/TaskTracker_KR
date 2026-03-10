@@ -1,4 +1,4 @@
-﻿<Window x:Class="TaskTracker_KR.CreateTaskWindow"
+﻿<Window x:Class="TaskTracker_KR.EmailShowerWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:TaskTracker_KR"
         WindowStyle="None"
         mc:Ignorable="d"
-        Name="createTaskWindow"
-        Title="CreateTaskWindow" Height="450" Width="800"
+        Name="emailShowerWindow"
+        Title="EmailShowerWindow" Height="450" Width="800"
         MinHeight="430" MinWidth="700">
     <Grid Style="{StaticResource background}">
 
@@ -114,47 +114,19 @@
                     HorizontalAlignment="Stretch"
                     Orientation="Vertical">
                     <TextBlock Style="{StaticResource title}"
-                               Text="Конструктор задач"/>
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Text="Введите название"/>
-                    <TextBox Style="{StaticResource inp_place}"
-                             Name="TaskInputTitle"/>
-
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Text="Введите описание"/>
-                    <RichTextBox Style="{StaticResource rich_inp_place}"
-                                 Name="TaskInputDescription"/>
-
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Text="Укажите дату проверки"/>
-                    <Calendar x:Name="ChooseDateCalendar"
-                              SelectedDatesChanged="ChooseDateCalendar_SelectedDatesChanged">
-                        <Calendar.LayoutTransform>
-                            <TransformGroup>
-                                <ScaleTransform
-                                    ScaleX="1.5"
-                                    ScaleY="1.5"/>
-                            </TransformGroup>
-                        </Calendar.LayoutTransform>
-                    </Calendar>
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Name="TaskCreateDateTextBlock"
-                               Text="Дата создания: "
-                               Padding="100 5 0 0"/>
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Name="TaskEndDateTextBlock"
-                               Text="Дата сдачи: "
-                               Padding="100 5 0 0"/>
-                    <TextBlock Style="{StaticResource normal_text}"
-                               Text="Выберите работника"
-                               Padding="100 5 0 0"/>
-                    <ComboBox Style="{StaticResource usually_combobox}"
-                              Name="ProgrammersList"/>
+                               Text="Почта"/>
+                    <StackPanel
+                        Name="ShowEmailMessages"
+                        VerticalAlignment="Stretch"
+                        Margin="20 0 0 0"
+                        HorizontalAlignment="Stretch"
+                        Orientation="Vertical"/>
 
                     <Button Style="{StaticResource buttons}"
+                            Click="add"
                             Content="Создать"/>
                 </StackPanel>
-                
+
             </ScrollViewer>
         </Border>
     </Grid>

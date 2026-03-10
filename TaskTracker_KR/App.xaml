@@ -271,6 +271,11 @@
             <Setter Property="Margin" Value="30"/>
             <Setter Property="Background" Value="Transparent"/>
         </Style>
+        
+        <!--Выпадающий список-->
+        <Style x:Key="usually_combobox" TargetType="ComboBox">
+            <Setter Property="Margin" Value="100 5 100 5"/>
+        </Style>
 
     </Application.Resources>
 </Application>
