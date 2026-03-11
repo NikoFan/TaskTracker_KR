@@ -17,4 +17,5 @@ packages/
 
 TaskTracker_KR/.env
 
-TaskTracker_KR/obj/Debug/
+TaskTracker_KR/obj
+TaskTracker_KR/bin
