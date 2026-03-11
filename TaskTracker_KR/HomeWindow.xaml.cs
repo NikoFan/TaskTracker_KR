@@ -61,13 +61,18 @@ namespace TaskTracker_KR
 
         }
 
-        public void CreateTaskClick(object sender, RoutedEventArgs e)
-        {
+        public void CreateTaskClick(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<CreateTaskWindow>(
                         this,
                         this.Left,
                         this.Top);
-        }
+
+        public void EmailShowerClick(object sender, RoutedEventArgs e) =>
+            SameActions.OpenNextWindowInterface<EmailShowerWindow>(
+                        this,
+                        this.Left,
+                        this.Top);
+
 
         // Перетаскивание окна
         public void DragWindow(object sender, RoutedEventArgs e)
@@ -98,22 +103,19 @@ namespace TaskTracker_KR
         public void HideWindow(object sender, RoutedEventArgs e) => 
             this.WindowState = WindowState.Minimized;
 
-        public void ShowNotify(object sender, RoutedEventArgs e)
-        {
+        public void ShowNotify(object sender, RoutedEventArgs e) =>
             MessageBox.Show(
                 "Войдите в аккаунт",
                 "Трекер",
                 MessageBoxButton.OK,
                 MessageBoxImage.Information);
-        }
 
         // Выйти из аккаунта
-        private async void LogOut(object sender, RoutedEventArgs e)
-        {
+        private async void LogOut(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<MainWindow>(
                 this,
                 this.Left,
                 this.Top);
-        }
+        
     }
 }

@@ -5,6 +5,9 @@
     <Compile Update="CreateTaskWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="EmailShowerWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="HomeWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
