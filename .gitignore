@@ -16,3 +16,5 @@ packages/
 *.snk
 
 TaskTracker_KR/.env
+
+TaskTracker_KR/obj/Debug/
