@@ -76,10 +76,14 @@ namespace TaskTracker_KR.Services
         /// Открывание окна интерфейса
         /// </summary>
         /// <param name="oldWindow">Старое окно</param>
+        /// <param name="height">Высота окна</param>
+        /// <param name="width">Ширина окна</param>
         /// <param name="leftDistance">Расстояние от левой части экрана</param>
         /// <param name="topDistance">Расстояние от верхней части экрана</param>
         public static void OpenNextWindowInterface<T>(
             Window oldWindow,
+            double height,
+            double width,
             double leftDistance,
             double topDistance) where T : Window, new() 
         {
@@ -87,6 +91,8 @@ namespace TaskTracker_KR.Services
             var window = new T()
             {
                 WindowStartupLocation = WindowStartupLocation.Manual,
+                Height = height,
+                Width = width,
                 Left = leftDistance,
                 Top = topDistance
             };
