@@ -88,7 +88,8 @@ namespace TaskTracker_KR.Services
             {
                 return await Client
                     .From<Account>()
-                    .Select("*, role:Roles(role_name, create_approval, accept_approval, work_approval, look_approval, send_approval)")
+                    .Select("*, role:Roles(*), " +
+                                "devgroup:DevGroups(*)")
                     .Where(x => x.Id == Cookie.currentAccountId)
                     .Single();             // Бросает exception если не найдено
             }
@@ -118,7 +119,7 @@ namespace TaskTracker_KR.Services
                 // Для RETURNS TABLE нужно использовать List<Dictionary> как тип
                 var response = await Client.Postgrest
                     .Rpc<List<Dictionary<string, object>>>(
-                        "get_available_programmers",
+                        "get_available_programmers", // Функция SQL
                         new { p_manager_id = Cookie.currentAccountId });
 
                 // Конвертируем в типизированный список
