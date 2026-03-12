@@ -273,8 +273,27 @@
         </Style>
         
         <!--Выпадающий список-->
-        <Style x:Key="usually_combobox" TargetType="ComboBox">
+        <Style x:Key="Combobox.Simple" TargetType="ComboBox">
             <Setter Property="Margin" Value="100 5 100 5"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#9CA3AF"/>
+            
+            <!--Рамка-->
+            <Setter Property="Background" Value="#F0F2F5"/>
+            <Setter Property="BorderBrush" Value="#1F2937"/>
+            <Setter Property="BorderThickness" Value="1"/>
+
+            <!-- Триггеры для интерактивности -->
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="BorderBrush" Value="#B8C5D6"/>
+                </Trigger>
+                <Trigger Property="IsKeyboardFocused" Value="True">
+                    <Setter Property="BorderBrush" Value="#6B7280"/>
+                    <Setter Property="BorderThickness" Value="2"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
     </Application.Resources>
