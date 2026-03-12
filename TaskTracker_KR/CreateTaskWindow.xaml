@@ -137,21 +137,23 @@
                             </TransformGroup>
                         </Calendar.LayoutTransform>
                     </Calendar>
+                    
                     <TextBlock Style="{StaticResource normal_text}"
                                Name="TaskCreateDateTextBlock"
-                               Text="Дата создания: "
+                               Text="Дата регистрации: "
                                Padding="100 5 0 0"/>
                     <TextBlock Style="{StaticResource normal_text}"
                                Name="TaskEndDateTextBlock"
                                Text="Дата сдачи: "
                                Padding="100 5 0 0"/>
                     <TextBlock Style="{StaticResource normal_text}"
-                               Text="Выберите работника"
+                               Text="Выберите сотрудника"
                                Padding="100 5 0 0"/>
-                    <ComboBox Style="{StaticResource usually_combobox}"
+                    <ComboBox Style="{StaticResource Combobox.Simple}"
                               Name="ProgrammersList"/>
 
                     <Button Style="{StaticResource buttons}"
+                            Click="CreateTaskOnClick"
                             Content="Создать"/>
                 </StackPanel>
                 

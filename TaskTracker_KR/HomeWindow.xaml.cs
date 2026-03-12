@@ -39,9 +39,10 @@ namespace TaskTracker_KR
             
             var response = await SupabaseHelper.GetAccountApprovals();
 
-            // Данные для вставки в форму аккаунта
-            string? accountName = response!=null ? response.Name : "-";
-            string? accountRole = response != null ? response.Role.RoleName : "-"; ;
+            // Установка данных от аккаунта в поля
+            AccountName.Text = response!=null ? response.Name : "-";
+            AccountRole.Text = response != null ? response.Role?.RoleName : "-";
+            AccountGroup.Text = response != null ? response.DevGroup?.Title : "-";
             Cookie.accountRights = new Dictionary<String, Boolean>()
             {
                 {"accept", response!=null ? response.Role.AcceptApproval : false},
@@ -50,11 +51,6 @@ namespace TaskTracker_KR
                 {"create", response!=null ? response.Role.CreateApproval : false},
                 {"send", response!=null ? response.Role.SendApproval : false}
             };
-
-            // Установка данных в поля
-            AccountName.Text = accountName;
-            AccountRole.Text = accountRole;
-
             
             // Установка разрешений для кнопок
             SameActions.SetLeftSideButtonsEnableStatus([WorkButton, LookButton, ChatButton, CreateButton, AcceptButton]);
@@ -64,12 +60,16 @@ namespace TaskTracker_KR
         public void CreateTaskClick(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<CreateTaskWindow>(
                         this,
+                        this.Height,
+                        this.Width,
                         this.Left,
                         this.Top);
 
         public void EmailShowerClick(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<EmailShowerWindow>(
                         this,
+                        this.Height,
+                        this.Width,
                         this.Left,
                         this.Top);
 
@@ -114,8 +114,10 @@ namespace TaskTracker_KR
         private async void LogOut(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<MainWindow>(
                 this,
+                this.Height,
+                this.Width,
                 this.Left,
                 this.Top);
-        
+
     }
 }

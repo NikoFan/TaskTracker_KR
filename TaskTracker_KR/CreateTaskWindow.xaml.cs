@@ -115,6 +115,24 @@ namespace TaskTracker_KR
                 MessageBox.Show($"Error drag window\n{ex.Message}");
             }
         }
+
+        /// <summary>
+        /// Создание задачи
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void CreateTaskOnClick(object sender, RoutedEventArgs e)
+        {
+            TextRange descriptionContent = new TextRange(
+                TaskInputDescription.Document.ContentStart,
+                TaskInputDescription.Document.ContentEnd);
+            MessageBox.Show($"Название: {TaskInputTitle.Text}\n" +
+                $"Описание задачи: {descriptionContent.Text}\n" +
+                $"Дата создания задачи: {TaskCreateDateTextBlock.Text[18..]}\n" +
+                $"Дата дэдлайна: {TaskEndDateTextBlock.Text[13..]}\n" +
+                $"Исполнитель: {ProgrammersList.Text}");
+        }
+
         // Закрытие окна
         public void CloseWindow(object sender, RoutedEventArgs e)
         {
@@ -143,7 +161,12 @@ namespace TaskTracker_KR
         
 
         private void BackToMainWindow(object sender, RoutedEventArgs e) =>
-            SameActions.OpenNextWindowInterface<HomeWindow>(this,this.Left,this.Top);
-        
+            SameActions.OpenNextWindowInterface<HomeWindow>(
+                this,
+                this.Height,
+                this.Width,
+                this.Left,
+                this.Top);
+
     }
 }

@@ -87,6 +87,8 @@ namespace TaskTracker_KR
                 if (Cookie.currentAccountId != -1)
                     SameActions.OpenNextWindowInterface<HomeWindow>(
                         this,
+                        this.Height,
+                        this.Width,
                         this.Left,
                         this.Top);
                 return;

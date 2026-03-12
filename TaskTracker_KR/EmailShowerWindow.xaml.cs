@@ -77,7 +77,12 @@ namespace TaskTracker_KR
         }
 
         private void BackToMainWindow(object sender, RoutedEventArgs e) =>
-            SameActions.OpenNextWindowInterface<HomeWindow>(this, this.Left, this.Top);
+            SameActions.OpenNextWindowInterface<HomeWindow>(
+                this,
+                this.Height,
+                this.Width,
+                this.Left,
+                this.Top);
 
     }
 }
