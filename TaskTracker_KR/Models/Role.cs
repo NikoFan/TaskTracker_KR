@@ -17,7 +17,7 @@ namespace TaskTracker_KR.Models
 
         // Название роли
         [Column("role_name")]
-        public string? RoleName { get; set; }
+        public string? RoleName { get; set; } = string.Empty;
 
         // Разрешение на создание задачи
         [Column("create_approval")]
