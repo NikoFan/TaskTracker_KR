@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using TaskTracker_KR.Models;       // Наша модель TaskItem
 using TaskTracker_KR.Properties;
+using System.Windows;
 
 namespace TaskTracker_KR.Services
 {
@@ -150,6 +151,36 @@ namespace TaskTracker_KR.Services
                 Console.WriteLine($"Connection error: {ex.Message}");
                 throw;
             }
+        }
+
+
+        /// <summary>
+        /// Метод создания задачи для программиста
+        /// </summary>
+        /// <param name="parameters">Словарь данных для добавления</param>
+        public static async Task<Boolean> CreateTask(Dictionary<string, object> parameters)
+        {
+            try
+            {
+                var result = await Client
+                    .Rpc<int>("create_task_safe", parameters);
+
+                MessageBox.Show(result.ToString());
+                return true;
+
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Connection error: {ex.Message}");
+                throw;
+                
+            }
+            
         }
     }
 }

@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using TaskTracker_KR.Models;
 using TaskTracker_KR.Services;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace TaskTracker_KR
 {
@@ -66,8 +67,8 @@ namespace TaskTracker_KR
         // Обновление поля с датой
         private void UpdateDateTime()
         {
-            TaskEndDateTextBlock.Text = "Дата сдачи:\n " + (ChooseDateCalendar.SelectedDate != null ? ChooseDateCalendar.SelectedDate.Value.ToString("dd/MM/yyyy") : "Дата не выбрана");
-            TaskCreateDateTextBlock.Text = "Дата регистрации:\n " + DateTime.Today.ToString("dd/MM/yyyy");
+            TaskEndDateTextBlock.Text = "Дата сдачи:\n " + (ChooseDateCalendar.SelectedDate != null ? ChooseDateCalendar.SelectedDate.Value.ToString("yyyy-MM-dd") : "Дата не выбрана");
+            TaskCreateDateTextBlock.Text = "Дата регистрации:\n " + DateTime.Today.ToString("yyyy-MM-dd");
         }
 
 
@@ -126,11 +127,40 @@ namespace TaskTracker_KR
             TextRange descriptionContent = new TextRange(
                 TaskInputDescription.Document.ContentStart,
                 TaskInputDescription.Document.ContentEnd);
-            MessageBox.Show($"Название: {TaskInputTitle.Text}\n" +
+            // Проверка введеных данных на SQLI
+            if (SameActions.VerifyUserInputDataForSQLI(
+                [TaskInputTitle.Text,
+                descriptionContent.Text]))
+            {
+                if (SameActions.SendCustomMessageBox(
+                    $"Проверьте данные:\n\n" +
+                    $"Название: {TaskInputTitle.Text}\n" +
                 $"Описание задачи: {descriptionContent.Text}\n" +
-                $"Дата создания задачи: {TaskCreateDateTextBlock.Text[18..]}\n" +
-                $"Дата дэдлайна: {TaskEndDateTextBlock.Text[13..]}\n" +
-                $"Исполнитель: {ProgrammersList.Text}");
+                $"Дата создания задачи:{TaskCreateDateTextBlock.Text[19..]}\n" +
+                $"Дата дэдлайна:{TaskEndDateTextBlock.Text[13..]}\n" +
+                $"Исполнитель: {ProgrammersList.Text.Split(".")[0]}",
+                    MessageBoxImage.Exclamation,
+                    true
+                    ))
+                {
+                    // Добавление данных
+                    // Формирование словаря для параметров
+                    var parameters = new Dictionary<string, object>
+                    {
+                        { "p_title", TaskInputTitle.Text },
+                        { "p_text", descriptionContent.Text },
+                        { "p_create_date", TaskCreateDateTextBlock.Text[19..] },
+                        { "p_end_date", TaskEndDateTextBlock.Text[13..] },
+                        { "p_end_fact_date", (object)DBNull.Value },
+                        { "p_employee_id", ProgrammersList.Text.Split(".")[0] },
+                        { "p_manager_id", Cookie.currentAccountId }
+                    };
+                    SupabaseHelper.CreateTask(parameters);
+                }
+            }
+
+            
+           
         }
 
         // Закрытие окна

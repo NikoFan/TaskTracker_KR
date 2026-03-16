@@ -101,6 +101,26 @@ namespace TaskTracker_KR.Services
         }
 
         /// <summary>
+        /// Метод проверки введенных пользователем данных на наличие SQLI
+        /// </summary>
+        /// <param name="stringDataSet">Массив данных от пользователя, 
+        /// который проверяется на SQLI</param>
+        public static Boolean VerifyUserInputDataForSQLI(
+            List<String> stringDataSet)
+        {
+            foreach(var item in stringDataSet)
+            {
+                if (item.ToString().Contains("'")
+                    || item.ToString().Contains("-")
+                    || item.ToString().Contains(";"))
+                    return false;
+             
+            }
+            return true;
+        }
+
+
+        /// <summary>
         /// Отправка MessageBox пользователю
         /// </summary>
         /// <param name="message">Текст сообщения</param>
