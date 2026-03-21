@@ -76,6 +76,14 @@ namespace TaskTracker_KR
             ShowEmailMessages.Children.Insert(index, text);
         }
 
+        public void CreateTaskClick(object sender, RoutedEventArgs e) =>
+            SameActions.OpenNextWindowInterface<CreateTaskWindow>(
+                        this,
+                        this.Height,
+                        this.Width,
+                        this.Left,
+                        this.Top);
+
         private void BackToMainWindow(object sender, RoutedEventArgs e) =>
             SameActions.OpenNextWindowInterface<HomeWindow>(
                 this,

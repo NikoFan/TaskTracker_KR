@@ -153,6 +153,7 @@ namespace TaskTracker_KR.Services
                     element.ProgrammerId,
                     element.ProgrammerName,
                     element.IsBusy).ToString());
+                MessageBox.Show(element.IsBusy.ToString() + $"{element.IsBusy == true} {element.IsBusy}");
                 
             }
         }
@@ -164,6 +165,6 @@ namespace TaskTracker_KR.Services
         public long ProgrammerId { get; set; } = id;
         public string ProgrammerName { get; set; } = name;
         public bool ProgrammerStatus { get; set; } = status;
-        public override string ToString() => $"{ProgrammerId}. {ProgrammerName} | Статус: {(ProgrammerStatus ? "Занят" : "Свободен")}";
+        public override string ToString() => $"{ProgrammerId}. {ProgrammerName} | Статус: {ProgrammerStatus} {(ProgrammerStatus == true ? "Занят" : "Свободен")}";
     }
 }

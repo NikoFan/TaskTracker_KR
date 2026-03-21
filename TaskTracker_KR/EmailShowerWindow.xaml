@@ -79,7 +79,7 @@
                         Uid="send"
                         Content="Почта"/>
                     <Button Style="{StaticResource small_buttons}"
-                        Click="ShowNotify"
+                        Click="CreateTaskClick"
                         Name="CreateButton"
                         Uid="create"
                         Content="Создать"/>

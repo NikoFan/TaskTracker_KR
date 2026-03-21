@@ -12,8 +12,13 @@ namespace TaskTracker_KR.Models
     // НЕ наследуемся от BaseModel (не нужно для Dictionary подхода)
     public class ProgrammerBusyInfo
     {
+        [JsonPropertyName("programmer_id")]
         public long ProgrammerId { get; set; }
+
+        [JsonPropertyName("programmer_name")]
         public string ProgrammerName { get; set; } = string.Empty;
+
+        [JsonPropertyName("is_busy")]
         public bool IsBusy { get; set; }
     }
 }

@@ -109,4 +109,5 @@ EXCEPTION
         RAISE EXCEPTION 'Ошибка назначения: Сотрудник с ID % уже выполняет активную задачу', 
             p_employee_id;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql
+SECURITY DEFINER;

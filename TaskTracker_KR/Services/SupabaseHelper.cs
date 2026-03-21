@@ -1,16 +1,18 @@
 ﻿using Serilog;
+using Sprache;
 using Supabase;                    // Основной клиент Supabase
+using Supabase.Postgrest.Attributes;
+using Supabase.Postgrest.Exceptions;
+using Supabase.Postgrest.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Supabase.Postgrest.Attributes;
-using Supabase.Postgrest.Models;
-using Supabase.Postgrest.Exceptions;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using TaskTracker_KR.Models;       // Наша модель TaskItem
 using TaskTracker_KR.Properties;
-using System.Windows;
 
 namespace TaskTracker_KR.Services
 {
@@ -123,19 +125,33 @@ namespace TaskTracker_KR.Services
                         "get_available_programmers", // Функция SQL
                         new { p_manager_id = Cookie.currentAccountId });
 
+                var response2 = await Client.Postgrest
+                    .Rpc<List<ProgrammerBusyInfo>>(
+                        "get_available_programmers",
+                        new { p_manager_id = Cookie.currentAccountId });
+
                 // Конвертируем в типизированный список
                 var programmers = new List<ProgrammerBusyInfo>();
 
-                if (response != null)
+                foreach(var item in response)
                 {
-                    foreach (var dict in response)
+                    MessageBox.Show($"item: {item["programmer_name"]} {item["is_busy"]}");
+                }
+
+                if (response2 != null)
+                {
+                    
+                    foreach (var modelInstance in response2)
                     {
-                        programmers.Add(new ProgrammerBusyInfo
-                        {
-                            ProgrammerId = Convert.ToInt64(dict["programmer_id"]),
-                            ProgrammerName = dict["programmer_name"]?.ToString() ?? string.Empty,
-                            IsBusy = Convert.ToBoolean(dict["is_busy"])
-                        });
+
+                        MessageBox.Show($"{modelInstance.IsBusy} -> busy");
+                        programmers.Add(modelInstance); 
+                        //programmers.Add(new ProgrammerBusyInfo
+                        //{
+                        //    ProgrammerId = Convert.ToInt64(dict["programmer_id"]),
+                        //    ProgrammerName = dict["programmer_name"]?.ToString() ?? string.Empty,
+                        //    IsBusy = ParseBoolean(dict["is_busy"])
+                        //});
                     }
                 }
 
@@ -150,6 +166,40 @@ namespace TaskTracker_KR.Services
             {
                 Console.WriteLine($"Connection error: {ex.Message}");
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Надёжно конвертирует различные форматы в bool.
+        /// </summary>
+        private static bool ParseBoolean(object? value)
+        {
+            if (value == null) return false;
+
+            // Если уже булево значение
+            if (value is bool b) return b;
+
+            // Если строка
+            if (value is string s)
+            {
+                s = s.Trim().ToLowerInvariant();
+                return s == "true" || s == "1" || s == "yes" || s == "t";
+            }
+
+            // Если число
+            if (value is int i) return i != 0;
+            if (value is long l) return l != 0;
+            if (value is short sh) return sh != 0;
+            if (value is byte by) return by != 0;
+
+            // Попытка универсальной конвертации
+            try
+            {
+                return Convert.ToBoolean(value);
+            }
+            catch
+            {
+                return false;
             }
         }
 
@@ -172,11 +222,13 @@ namespace TaskTracker_KR.Services
             catch (PostgrestException ex)
             {
                 Console.WriteLine($"Supabase error: {ex.Message}");
+                MessageBox.Show($"Supabase error: {ex.Message}");
                 throw;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Connection error: {ex.Message}");
+                MessageBox.Show($"Connection error: {ex.Message}");
                 throw;
                 
             }
