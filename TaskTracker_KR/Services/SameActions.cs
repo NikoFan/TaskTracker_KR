@@ -153,7 +153,6 @@ namespace TaskTracker_KR.Services
                     element.ProgrammerId,
                     element.ProgrammerName,
                     element.IsBusy).ToString());
-                MessageBox.Show(element.IsBusy.ToString() + $"{element.IsBusy == true} {element.IsBusy}");
                 
             }
         }

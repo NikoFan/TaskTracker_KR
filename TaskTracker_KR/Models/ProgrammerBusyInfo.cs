@@ -16,7 +16,7 @@ namespace TaskTracker_KR.Models
         public long ProgrammerId { get; set; }
 
         [JsonPropertyName("programmer_name")]
-        public string ProgrammerName { get; set; } = string.Empty;
+        public string? ProgrammerName { get; set; } = string.Empty;
 
         [JsonPropertyName("is_busy")]
         public bool IsBusy { get; set; }
