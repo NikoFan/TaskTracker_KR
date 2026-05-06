@@ -8,32 +8,23 @@ using Supabase.Postgrest.Models;
 
 namespace TaskTracker_KR.Models
 {
-    [Table("Tasks")]
-    public class Task : BaseModel
+    [Table("ReadyTasks")]
+    public class TaskModel : BaseModel
     {
-        [Column("task_id")]
+        [Column("id")]
         public int Id { get; set; }
 
-        [Column("task_title")]
+        [Column("title")]
         public string? Title { get; set; } = string.Empty;
 
-        [Column("task_text")]
-        public string? Text { get; set; } = string.Empty;
+        [Column("comment")]
+        public string? Comment { get; set; } = string.Empty;
 
-        [Column("task_create_date")]
-        public DateOnly CreateDate { get; set; }
+        [Column("result")]
+        public int Result { get; set; }
 
-        [Column("task_end_date")]
-        public DateOnly EndDate { get; set; }
-
-        [Column("task_end_fact_date")]
-        public DateOnly FactEndDate { get; set; }
-
-        [Column("task_status")]
-        public bool Status { get; set; }
-
-        [Column("account_employee_FK")]
-        public int EmployeeFK { get; set; }
+        [Column("worker_id")]
+        public int WorkerId { get; set; }
         public Account? Account { get; set; }
 
 

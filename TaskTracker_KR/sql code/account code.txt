@@ -1,40 +1,13 @@
 Insert into "Accounts"
-values (1, 'neoleg', '123', 'nestruev@mail.ru', 'Неструев Олег Денисович', 2, 1)
-(2, 'user2', '123', 'nestruev@mail.ru', 'Макеев Дмитрий Сергеевич', 3, 1),
-(3, 'user3', '123', 'nestruev@mail.ru', 'Чижов Константин Сергеевич', 1, 1),
-(4, 'user4', '123', 'nestruev@mail.ru', 'Гавриченко Даниил Валентинович', 1, 1),
-(5, 'user5', '123', 'nestruev@mail.ru', 'Филатов Константин Александрович', 1, 1),
-(6, 'user6', '123', 'nestruev@mail.ru', 'Иванов Иван Иванович', 1, 1),
-(7, 'user7', '123', 'nestruev@mail.ru', 'Иванов Сергей Иванович', 2, 1),
-(8, 'user8', '123', 'nestruev@mail.ru', 'Иванов Андрей Иванович', 3, 1)
-
-
-CREATE OR REPLACE FUNCTION get_available_programmers(p_manager_id INT)
-RETURNS TABLE(
-    programmer_id BIGINT,
-    programmer_name TEXT,
-    is_busy TEXT  -- Теперь возвращаем строку, а не булево значение!
-) AS $$
-BEGIN
-    RETURN QUERY
-    SELECT 
-        a.account_id,
-        a.account_name,
-        CASE 
-            WHEN EXISTS(
-                SELECT 1 
-                FROM "Tasks" t 
-                WHERE t."account_employee_FK" = a.account_id 
-                  AND t.task_status = true
-            ) THEN 'true'  -- ← Возвращаем строку "true"
-            ELSE 'false'   -- ← Возвращаем строку "false"
-        END AS is_busy
-    FROM "Accounts" a
-    WHERE a.account_role_fk = 1  -- Программисты (роль 1)
-      AND a.dev_group_id_fk = (
-          SELECT dev_group_id_fk 
-          FROM "Accounts" 
-          WHERE account_id = p_manager_id
-      );
-END;
-$$ LANGUAGE plpgsql;
+values (1, 'neoleg', '123', 'Неструев Олег Денисович', 'Начальник'),
+(2, 'user_1', '123', 'Макеев Дмитрий Сергеевич', 'Менеджер'),
+(3, 'user_2', '123', 'Гавриченко Даниил Валентинович', 'Программист'),
+(4, 'user_3', '123', 'Глухова Татьяна Владимировна', 'Программист'),
+(5, 'user_4', '123', 'Филатов Константин Александрович', 'Программист'),
+(6, 'user_5', '123', 'Погодин Алексей Сергеевич', 'Программист'),
+(7, 'user_6', '123', 'Солово Павел Сергеевич', 'Программист'),
+(8, 'user_7', '123', 'Юркин Сергей Николаевич', 'Программист'),
+(9, 'user_8', '123', 'Иванов Иван Иванович', 'Программист'),
+(10, 'user_9', '123', 'Резкий Владимир Ильич', 'Программист'),
+(11, 'user_10', '123', 'Крутой Виктор Петрович', 'Программист'),
+(12, 'user_11', '123', 'Сигов Дмитрий Анатольевич', 'Программист')

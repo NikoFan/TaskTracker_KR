@@ -63,15 +63,6 @@ namespace TaskTracker_KR
         // Свернуть окно
         public void HideWindow(object sender, RoutedEventArgs e) => 
             this.WindowState = WindowState.Minimized;
-
-        public void ShowNotify(object sender, RoutedEventArgs e)
-        {
-           SameActions.SendCustomMessageBox(
-                "Войдите в аккаунт",
-                MessageBoxImage.Information);
-        }
-     
-
         private async void AccountSignIn(object sender, RoutedEventArgs e)
         {
             try
@@ -81,11 +72,25 @@ namespace TaskTracker_KR
                     LoginInput.Text,
                     PasswordInput.Text);
                 SameActions.SendCustomMessageBox(
-                    $"Результат авторизации: {(Cookie.currentAccountId == -1 ? "Неверные данные": "Авторизован")}",
+                    $"Результат авторизации: {(Cookie.currentAccountId == -1 ? "Неверные данные" : "Авторизован")}",
                     Cookie.currentAccountId == -1 ? MessageBoxImage.Stop : MessageBoxImage.Information);
                 // Открытие окна
-                if (Cookie.currentAccountId != -1)
-                    SameActions.OpenNextWindowInterface<HomeWindow>(
+                if (Cookie.currentAccountRole == "Программист")
+                    SameActions.OpenNextWindowInterface<AddReadyTask>(
+                        this,
+                        this.Height,
+                        this.Width,
+                        this.Left,
+                        this.Top);
+               else if (Cookie.currentAccountRole == "Менеджер")
+                    SameActions.OpenNextWindowInterface<ShowNewTasks>(
+                        this,
+                        this.Height,
+                        this.Width,
+                        this.Left,
+                        this.Top);
+                else if (Cookie.currentAccountRole == "Начальник")
+                    SameActions.OpenNextWindowInterface<BossDashboard>(
                         this,
                         this.Height,
                         this.Width,
@@ -103,5 +108,83 @@ namespace TaskTracker_KR
                 MessageBox.Show($"Ошибка: {ex.Message}");
             }
         }
+
+        //private async void setData()
+        //{
+        //    //int index = TaskStackPanel.Children.Count;
+        //    //for (int i = 0; i < 5; i++) {
+        //    //    Border block = new Border();
+        //    //    block.HorizontalAlignment = HorizontalAlignment.Center;
+
+        //    //    TextBlock textBlock = new TextBlock();
+        //    //    textBlock.Text = $"Задача {i}";
+        //    //    block.Child = textBlock;
+        //    //    TaskStackPanel.Children.Add(block);
+        //    //}
+
+        //    foreach (TaskModel task in await SupabaseHelper.GetTasksByEmployeeAsync())
+        //    {
+        //        var border = new Border
+        //        {
+        //            BorderBrush = Brushes.LightGray,
+        //            BorderThickness = new Thickness(1),
+        //            Margin = new Thickness(4),
+        //            Padding = new Thickness(8),
+        //            CornerRadius = new CornerRadius(4)
+        //        };
+        //        var grid = new Grid();
+        //        grid.ColumnDefinitions.Add(new()); grid.ColumnDefinitions.Add(new());
+
+
+        //        grid.RowDefinitions.Add(new());
+        //        var title = new TextBlock
+        //        {
+        //            Text = $"{task.Title}",
+        //            FontSize = 32,
+        //            Margin = new Thickness(2)
+        //        };
+        //        Grid.SetRow(title, 0); Grid.SetColumn(title, 0);
+        //        grid.Children.Add(title);
+
+        //        grid.RowDefinitions.Add(new());
+        //        var description = new TextBlock
+        //        {
+        //            Text = $"{task.Text}",
+        //            Margin = new Thickness(2)
+        //        };
+        //        Grid.SetRow(description, 1); Grid.SetColumn(description, 0);
+        //        grid.Children.Add(description);
+
+        //        grid.RowDefinitions.Add(new());
+        //        var date_Start = new TextBlock
+        //        {
+        //            Text = $"{task.CreateDate.ToString()}",
+        //            Margin = new Thickness(2)
+        //        };
+        //        Grid.SetRow(date_Start, 2); Grid.SetColumn(date_Start, 0);
+        //        grid.Children.Add(date_Start);
+
+        //        grid.RowDefinitions.Add(new());
+        //        var dateEnd = new TextBlock
+        //        {
+        //            Text = $"{task.EndDate.ToString()}",
+        //            Margin = new Thickness(2)
+        //        };
+        //        Grid.SetRow(dateEnd, 3); Grid.SetColumn(dateEnd, 0);
+        //        grid.Children.Add(dateEnd);
+
+
+
+
+        //        var btns = new StackPanel { Orientation = Orientation.Vertical, Margin = new Thickness(6, 0, 0, 0) };
+        //        btns.Children.Add(new Button { Content = "✅" });
+        //        btns.Children.Add(new Button { Content = "❌" });
+        //        Grid.SetColumn(btns, 1); Grid.SetRowSpan(btns, 4);
+        //        grid.Children.Add(btns);
+
+        //        border.Child = grid;
+        //        DataPanel.Children.Add(border);
+        //    }
+        //}
     }
 }

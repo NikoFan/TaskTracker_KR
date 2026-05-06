@@ -41,22 +41,6 @@ namespace TaskTracker_KR.Services
         }
 
         /// <summary>
-        /// Получает все роли из таблицы "Roles"
-        /// </summary>
-        public static async Task<List<Role>> GetAllRolesAsync()
-        {
-            if (Client == null)
-                throw new InvalidOperationException("Supabase client not initialized.");
-
-            // Запрос: SELECT * FROM roles
-            var response = await Client
-                .From<Role>()
-                .Get();         // Выполняем SELECT
-            // Возвращаем список моделей (или пустой список, если null)
-            return response?.Models ?? new List<Role>();
-        }
-
-        /// <summary>
         /// Получение подтверждения наличия аккаунта по Login и Password
         /// </summary>
         public static async Task<Boolean> GetCurrentAccount(
@@ -67,7 +51,7 @@ namespace TaskTracker_KR.Services
                 throw new InvalidOperationException("Supabase client not initialized.");
             var response = await Client
                 .From<Account>()
-                .Select("account_id")
+                .Select("id, role")
                 .Where(x => x.Login == inputLogin)
                 .Where(x => x.Password == inputPassword)
                 .Single();
@@ -76,98 +60,49 @@ namespace TaskTracker_KR.Services
             {
                 Cookie.currentAccountId = -1;
                 return false;
-            }  
+            }
+            
             Cookie.currentAccountId = response.Id;
+            Cookie.currentAccountRole = response.Role;
             return true;
         }
 
         /// <summary>
-        /// Получение данных accounts + roles
+        /// Получение списка неоцененных задач
         /// </summary>
-        public static async Task<Account> GetAccountApprovals()
+        public static async Task<Boolean> GetListOfNewTasks()
         {
-            try
+            if (Client == null)
+                throw new InvalidOperationException("Supabase client not initialized.");
+            var response = await Client
+                .From<TaskModel>()
+                .Select("*")
+                .Where(x => x.Result == 0)
+                .Get();
+            Log.Information($"response: {response?.ToString()}");
+            if (response == null)
             {
-                return await Client
-                    .From<Account>()
-                    .Select("*, role:Roles(*), " +
-                                "devgroup:DevGroups(*)")
-                    .Where(x => x.Id == Cookie.currentAccountId)
-                    .Single();             // Бросает exception если не найдено
+                Cookie.currentAccountId = -1;
+                return false;
             }
-            catch (PostgrestException ex)
-            {
-                // Ошибка RLS, синтаксиса запроса и т.д.
-                Console.WriteLine($"Supabase error: {ex.Message}");
-                throw; // Пробрасываем дальше, чтобы приложение могло обработать
-            }
-            catch (Exception ex)
-            {
-                // Сетевые ошибки, таймауты
-                Console.WriteLine($"Connection error: {ex.Message}");
-                throw;
-            }
+            return true;
         }
 
 
-        /// <summary>
-        /// Получение списка ФИО и id исполнителей
-        /// </summary>
-        public static async Task<List<ProgrammerBusyInfo>> GetAvailableProgrammersAsync()
-        {
-            try
-            {
-                // В версии 4.1.0 Rpc возвращает ОДИН объект
-                // Для RETURNS TABLE нужно использовать List<Dictionary> как тип
-                var response = await Client.Postgrest
-                    .Rpc<List<Dictionary<string, object>>>(
-                        "get_available_programmers", // Функция SQL
-                        new { p_manager_id = Cookie.currentAccountId });
-
-                // Конвертируем в типизированный список
-                var programmers = new List<ProgrammerBusyInfo>();
-                if (response != null)
-                {
-                    
-                    foreach (var dict in response)
-                    {
-                        if (!Convert.ToBoolean(dict["is_busy"]))
-                            programmers.Add(new ProgrammerBusyInfo
-                            {
-                                ProgrammerId = Convert.ToInt64(dict["programmer_id"]),
-                                ProgrammerName = dict["programmer_name"]?.ToString() ?? string.Empty,
-                                IsBusy = Convert.ToBoolean(dict["is_busy"])
-                            });
-                    }
-                }
-
-                return programmers;
-            }
-            catch (PostgrestException ex)
-            {
-                Console.WriteLine($"Supabase error: {ex.Message}");
-                throw;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Connection error: {ex.Message}");
-                throw;
-            }
-        }
+        
 
 
         /// <summary>
-        /// Метод создания задачи для программиста
+        /// Метод добавления задачи для проверки
         /// </summary>
         /// <param name="parameters">Словарь данных для добавления</param>
-        public static async Task<Boolean> CreateTask(Dictionary<string, object> parameters)
+        public static async Task<Boolean> SendTask(Dictionary<string, object> parameters)
         {
             try
             {
                 var result = await Client
-                    .Rpc<int>("create_task_safe", parameters);
+                    .Rpc<int>("add_ready_task", parameters);
 
-                MessageBox.Show(result.ToString());
                 return true;
 
             }
@@ -186,5 +121,118 @@ namespace TaskTracker_KR.Services
             }
             
         }
+
+        ///<summary>
+        /// Выгрузка не проверенных задач
+        /// </summary>
+        /// 
+        public static async Task<List<Dictionary<string, object>>> GetNewTasksToCheck()
+        {
+            try
+            {
+                // Вызываем функцию и получаем список словарей
+                var response = await Client
+                    .Rpc<List<Dictionary<string, object>>>(
+                        "get_tasks_with_result_zero",
+                        new { });
+                return response;
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                MessageBox.Show($"Supabase error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Connection error: {ex.Message}");
+                MessageBox.Show($"Connection error: {ex.Message}");
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Обновление оценки у задачи
+        /// </summary>
+        /// 
+        public static async Task<Boolean> UpdateTaskResult(long taskId, long workerId, short newResult)
+        {
+            try
+            {
+                // Передаем параметры в функцию
+                var parameters = new Dictionary<string, object>
+                {
+                    { "p_task_id", taskId },
+                    { "p_worker_id", workerId },
+                    { "p_new_result", newResult }
+                };
+
+                // Вызываем функцию
+                await Client.Rpc("update_task_result", parameters);
+                return true;
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                MessageBox.Show($"Supabase error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Connection error: {ex.Message}");
+                MessageBox.Show($"Connection error: {ex.Message}");
+                throw;
+            }
+        }
+
+        ///<summary>
+        /// Получение топа программистов для доски почета
+        /// </summary>
+        /// 
+        public static async Task<List<Dictionary<string, object>>> GetTop5SuccessfulProgrammers()
+        {
+            try
+            {
+                return await Client
+                    .Rpc<List<Dictionary<string, object>>>(
+                        "get_top_5_successful_programmers",
+                        new { });
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                throw;
+            }
+        }
+
+        ///<summary>
+        ///получение всех программистов с их успеваемостью
+        /// </summary>
+        /// 
+        public static async Task<List<Dictionary<string, object>>> GetProgrammerStatistics()
+        {
+            try
+            {
+                // ВАЖНО: Получаем список словарей вместо моделей
+                var response = await Client
+                    .Rpc<List<Dictionary<string, object>>>(
+                        "get_programmer_statistics",
+                        new { });
+
+                // Проверка данных (для отладки)
+                foreach (var stat in response)
+                {
+                    Console.WriteLine($"ID: {stat["worker_id"]}, Name: {stat["worker_name"]}, Avg: {stat["avg_score"]}");
+                }
+
+                return response;
+            }
+            catch (PostgrestException ex)
+            {
+                Console.WriteLine($"Supabase error: {ex.Message}");
+                throw;
+            }
+        }
+
     }
 }

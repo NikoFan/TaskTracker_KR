@@ -12,12 +12,14 @@ namespace TaskTracker_KR.Services
     {
         // id активного аккаунта
         private static int _id = -1;
+        private static string _role = "NONE";
        
         // Размер окна
         private static WindowState _windowState = WindowState.Normal;
 
         // Разрешения для пользователя
         private static Dictionary<String, Boolean> _accountRights = new Dictionary<string, bool>();
+
         public static int currentAccountId
         {
             get 
@@ -28,6 +30,18 @@ namespace TaskTracker_KR.Services
             {
                 _id = value;
             } 
+        }
+
+        public static string currentAccountRole
+        {
+            get
+            {
+                return _role;
+            }
+            set
+            {
+                _role = value;
+            }
         }
 
         public static WindowState windowState { get { return _windowState; } set { _windowState = value; } }

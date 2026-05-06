@@ -1,0 +1,104 @@
+﻿<Window x:Class="TaskTracker_KR.AddReadyTask"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskTracker_KR"
+        WindowStyle="None"
+        mc:Ignorable="d"
+        Name="addReadyTask"
+        Title="AddReadyTask" Height="450" Width="800"
+        MinHeight="450" MinWidth="700">
+    <Grid Style="{StaticResource background}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--Верхняя область для перетаскивания-->
+        <Border Grid.Row="0"
+            Grid.ColumnSpan="2"
+            MouseLeftButtonDown="DragWindow"
+        Style="{StaticResource sides}">
+            <StackPanel
+            Margin="0 0 20 0"
+            Orientation="Horizontal"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Right">
+                <!--Блок кнопок управления окном-->
+                <Grid>
+                    <StackPanel
+                    Orientation="Horizontal"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Right"
+                    Margin="10 0 0 0">
+                        <Button Style="{StaticResource window_buttons}"
+                            Click="HideWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/minus-line.png"
+                            Margin="0 12 0 0"/>
+                        </Button>
+                        <Button Style="{StaticResource window_buttons}"
+                            Click="FullSizeWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/square.png"
+                               Name="FullOpenIcon"/>
+                        </Button>
+                        <Button Style="{StaticResource window_buttons}"
+                            Click="CloseWindow">
+                            <Image Style="{StaticResource small_icons}" Source="/icons/reject.png"/>
+                        </Button>
+
+                    </StackPanel>
+                </Grid>
+
+            </StackPanel>
+        </Border>
+
+        <!--Левая область-->
+        <Border Style="{StaticResource sides}"
+            Grid.Row="1"
+            Grid.Column="0">
+            <StackPanel
+                Margin="20 20 0 20"
+                Orientation="Vertical"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top">
+                <Button Style="{StaticResource small_buttons}"
+                    Click="SeeTop"
+                    Content="Рейтинг"/>
+            </StackPanel>
+        </Border>
+
+
+        <Border Grid.Column="1"
+            Grid.Row="1"
+            Style="{StaticResource log_in_panel}">
+            <StackPanel 
+            Name="DataPanel"
+            VerticalAlignment="Center"
+            HorizontalAlignment="Stretch"
+            Orientation="Vertical">
+                <TextBlock Style="{StaticResource title}"
+                       Text="Добавить на проверку"/>
+                <TextBlock Style="{StaticResource normal_text}"
+                       Text="Заголовок задачи"/>
+                <TextBox Style="{StaticResource inp_place}"
+                     Name="TitleInput"/>
+                <TextBlock Style="{StaticResource normal_text}"
+                       Text="Кратки комментарий"/>
+                <TextBox Style="{StaticResource inp_place}"
+                         Name="CommentInput"/>
+                <Button Style="{StaticResource buttons}"
+                    Click="SendToCheck"
+                    Content="Отправить на проверку"/>
+
+            </StackPanel>
+
+        </Border>
+
+    </Grid>
+</Window>

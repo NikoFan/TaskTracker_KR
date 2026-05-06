@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Name="mainWindow"
         Title="MainWindow" Height="450" Width="800"
-        MinHeight="430" MinWidth="700">
+        MinHeight="450" MinWidth="700">
     <Grid Style="{StaticResource background}">
         
         <Grid.ColumnDefinitions>
@@ -61,38 +61,14 @@
         <!--Левая область-->
         <Border Style="{StaticResource sides}"
                 Grid.Row="1"
-                Grid.Column="0">
-            <Grid>
-                <StackPanel
-                    Margin="20 20 0 20"
-                    Orientation="Vertical"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Top">
-                    <Button Style="{StaticResource small_buttons}"
-                            Click="ShowNotify"
-                            Content="Просмотр">
-                    </Button>
-                    <Button Style="{StaticResource small_buttons}"
-                            Click="ShowNotify"
-                            Content="Почта">
-                    </Button>
-                    <Button Style="{StaticResource small_buttons}"
-                            Click="ShowNotify"
-                            Content="Задачи">
-                    </Button>
-                    <Button Style="{StaticResource small_buttons}"
-                            Click="ShowNotify"
-                            Content="Мои задачи">
-                    </Button>
-                </StackPanel>
-            </Grid>
-        </Border>
-        
-        
+                Grid.Column="0"/>
+
+
         <Border Grid.Column="1"
                 Grid.Row="1"
                 Style="{StaticResource log_in_panel}">
             <StackPanel 
+                Name="DataPanel"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Stretch"
                 Orientation="Vertical">
@@ -108,6 +84,7 @@
                 <Button Style="{StaticResource buttons}"
                         Click="AccountSignIn"
                         Content="Войти"/>
+
             </StackPanel>
             
         </Border>

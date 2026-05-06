@@ -12,19 +12,6 @@ namespace TaskTracker_KR.Services
 {
     public static class SameActions
     {
-        /// <summary>
-        /// Установка прав доступка к кнопкам
-        /// на левой части интерфейса
-        /// </summary>
-        /// <param name="leftSideButtons">Список с кнопками</param>
-        public static void SetLeftSideButtonsEnableStatus(
-            List<Button> leftSideButtons)
-        {
-            foreach (var button in leftSideButtons) {
-                // Определение активности
-                button.IsEnabled = Cookie.accountRights[button.Uid];
-            }
-        }
 
         /// <summary>
         /// Контроль перед открытием окна его размеров и изменение иконки кнопки
@@ -100,25 +87,6 @@ namespace TaskTracker_KR.Services
             window.Show();
         }
 
-        /// <summary>
-        /// Метод проверки введенных пользователем данных на наличие SQLI
-        /// </summary>
-        /// <param name="stringDataSet">Массив данных от пользователя, 
-        /// который проверяется на SQLI</param>
-        public static Boolean VerifyUserInputDataForSQLI(
-            List<String> stringDataSet)
-        {
-            foreach(var item in stringDataSet)
-            {
-                if (item.ToString().Contains("'")
-                    || item.ToString().Contains("-")
-                    || item.ToString().Contains(";"))
-                    return false;
-             
-            }
-            return true;
-        }
-
 
         /// <summary>
         /// Отправка MessageBox пользователю
@@ -137,33 +105,5 @@ namespace TaskTracker_KR.Services
                 icon) == MessageBoxResult.Yes;
         }
 
-
-        /// <summary>
-        /// Установка в ComboBox данных о программистах из группы
-        /// </summary>
-        /// <param name="progList">Список программистов</param>
-        /// <param name="combobox">Выпаадющий список</param>
-        public static void PutProgrammersList(
-            List<ProgrammerBusyInfo> progList,
-            ComboBox combobox)
-        {
-            foreach (var element in progList)
-            {
-                combobox.Items.Add(new ProgrammersBusyToCombobox(
-                    element.ProgrammerId,
-                    element.ProgrammerName,
-                    element.IsBusy).ToString());
-                
-            }
-        }
-    }
-
-    // Модель для установки текста в выпадающий список
-    public class ProgrammersBusyToCombobox(long id, string name, bool status)  // Со скобками
-    {
-        public long ProgrammerId { get; set; } = id;
-        public string ProgrammerName { get; set; } = name;
-        public bool ProgrammerStatus { get; set; } = status;
-        public override string ToString() => $"{ProgrammerId}. {ProgrammerName} | Статус: {ProgrammerStatus} {(ProgrammerStatus == true ? "Занят" : "Свободен")}";
     }
 }
