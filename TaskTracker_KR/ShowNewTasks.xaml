@@ -74,7 +74,8 @@
                 HorizontalAlignment="Stretch"
                 Orientation="Vertical">
                     <TextBlock Style="{StaticResource title}"
-                           Text="Не проверенные задачи"/>
+                           Text="Нет новых задач"/>
+                    
 
                 </StackPanel>
             </ScrollViewer>

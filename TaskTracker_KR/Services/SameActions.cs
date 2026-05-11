@@ -100,7 +100,7 @@ namespace TaskTracker_KR.Services
         {
             return MessageBox.Show(
                 message,
-                "Трекер",
+                "Оповещение",
                 buttons == null ? MessageBoxButton.OK : MessageBoxButton.YesNo,
                 icon) == MessageBoxResult.Yes;
         }

@@ -85,11 +85,11 @@
                 <TextBlock Style="{StaticResource title}"
                        Text="Добавить на проверку"/>
                 <TextBlock Style="{StaticResource normal_text}"
-                       Text="Заголовок задачи"/>
+                       Text="Укажите название задачи"/>
                 <TextBox Style="{StaticResource inp_place}"
                      Name="TitleInput"/>
                 <TextBlock Style="{StaticResource normal_text}"
-                       Text="Кратки комментарий"/>
+                       Text="Введите комментарий"/>
                 <TextBox Style="{StaticResource inp_place}"
                          Name="CommentInput"/>
                 <Button Style="{StaticResource buttons}"

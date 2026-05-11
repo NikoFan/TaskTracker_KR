@@ -68,20 +68,25 @@ namespace TaskTracker_KR
         {
 
             var data = await SupabaseHelper.GetProgrammerStatistics();
-
+            if (data.Count == 0)
+            {
+                SameActions.SendCustomMessageBox("Ваш отдел пуст!!", MessageBoxImage.Asterisk);
+                return;
+            }
             DataPanel.Children.Clear();
+            DataPanel.Children.Add(
+                    new TextBlock
+                    {
+                        Text = "Статистика сотрудников",
+                        FontSize = 20,
+                        FontWeight = FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(0, 10, 0, 15),
+                        TextAlignment = TextAlignment.Center
+                    }
+                    );
             foreach (var task in data)
             {
-                // Безопасное чтение данных
-                //long workerID = task.WorkerId;
-                //string workerName = task.WorkerName;
-                //int taskCount = task.TaskCount;
-                //double avgScore = task.AvgScore;
-                //int score5 = task.Score5Count;
-                //int score4 = task.Score4Count;
-                //int score3 = task.Score3Count;
-                //int score2 = task.Score2Count;
-                //int score1 = task.Score1Count;
 
 
                 long workerID = Convert.ToInt64(task["worker_id"]);
@@ -95,12 +100,9 @@ namespace TaskTracker_KR
                 int score1 = Convert.ToInt32(task["score_1_count"]);
 
                 int sum = (score5 + score4 + score3 + score2 + score1) == 0 ? 1 : score5 + score4 + score3 + score2 + score1;
-
-
-
-
                 // Содержимое карточки
                 StackPanel content = new();
+
                 content.Children.Add(new TextBlock { Text = workerID.ToString(), FontWeight = FontWeights.Bold, FontSize = 14, Margin = new Thickness(0, 0, 0, 4) });
                 content.Children.Add(new TextBlock { Text = workerName, FontWeight = FontWeights.Bold, FontSize = 22, Margin = new Thickness(0, 0, 0, 4) });
                 content.Children.Add(new TextBlock { Text = "Общее число задач: " + taskCount.ToString(), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 4) });
@@ -123,7 +125,7 @@ namespace TaskTracker_KR
                     Padding = new Thickness(10),
                     Margin = new Thickness(0, 5, 0, 5)
                 };
-
+                
                 // Добавляем ПОСЛЕ существующего заголовка
                 DataPanel.Children.Add(border);
             }

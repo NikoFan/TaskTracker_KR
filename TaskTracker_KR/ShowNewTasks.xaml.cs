@@ -63,12 +63,17 @@ namespace TaskTracker_KR
         // Свернуть окно
         public void HideWindow(object sender, RoutedEventArgs e) =>
             this.WindowState = WindowState.Minimized;
-        
-        private async void UpdateTaskResult(int taskId, long workerId, short newResult)
+
+        private async void UpdateTaskResult(
+            int taskId, long workerId, short newResult, string workerName,
+            string title)
         {
-            MessageBox.Show($"{taskId}, {workerId}, result: {newResult}");
-            await SupabaseHelper.UpdateTaskResult(taskId, workerId, newResult);
-            GenerateTaskCards();
+            if (SameActions.SendCustomMessageBox($"Вы ставите оценку: {newResult}\nСотруднику {workerName}\nНа задачу: {title}?", MessageBoxImage.Question, true))
+            {
+                await SupabaseHelper.UpdateTaskResult(taskId, workerId, newResult);
+                GenerateTaskCards();
+            }
+            
         }
         
 
@@ -76,8 +81,49 @@ namespace TaskTracker_KR
         {
 
             var data = await SupabaseHelper.GetNewTasksToCheck();
+            if (data.Count == 0)
+            {
+                SameActions.SendCustomMessageBox("Нет новых задач!", MessageBoxImage.Asterisk);
+                DataPanel.Children.Clear();
+                DataPanel.Children.Add(
+                    new TextBlock
+                    {
+                        Text = "Нет новых задач",
+                        FontSize = 30,
+                        FontWeight = FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(0, 10, 0, 15),
+                        TextAlignment = TextAlignment.Center
+                    }
+                    );
+
+                var btn =
+                    new Button
+                    {
+                        Content = "Обновить список",
+                        FontSize = 20,
+                        Padding = new Thickness(10),
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(100, 10, 100, 10)
+                    };
+                btn.Click += (s, e) => GenerateTaskCards();
+
+                DataPanel.Children.Add(btn);
+                return;
+            }
 
             DataPanel.Children.Clear();
+            DataPanel.Children.Add(
+                    new TextBlock
+                    {
+                        Text = "Список новых задач",
+                        FontSize = 20,
+                        FontWeight = FontWeights.Bold,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        Margin = new Thickness(0, 10, 0, 15),
+                        TextAlignment = TextAlignment.Center
+                    }
+                    );
             foreach (var task in data)
             {
                 // Безопасное чтение данных
@@ -107,8 +153,11 @@ namespace TaskTracker_KR
                 ratingPanel.Children.Add(ratingTxt);
                 ratingPanel.Children.Add(btnUp);
 
+                 
+
                 // Содержимое карточки
                 StackPanel content = new();
+
                 content.Children.Add(new TextBlock { Text = title, FontWeight = FontWeights.Bold, FontSize = 14, Margin = new Thickness(0, 0, 0, 4) });
                 content.Children.Add(new TextBlock { Text = desc, TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 4) });
                 content.Children.Add(new TextBlock { Text = $"👤 {assignee}", FontStyle = FontStyles.Italic, Margin = new Thickness(0, 0, 0, 6) });
@@ -119,7 +168,9 @@ namespace TaskTracker_KR
                 btnRate.Click += (s, e) => UpdateTaskResult(
                     Convert.ToInt32(task["id"]),
                     Convert.ToInt64(task["worker_id"]),
-                    Convert.ToInt16(task["result"])); //  MessageBox.Show($"Задача: {title}\nФинальная оценка: {rating}/5", "Подтверждение", MessageBoxButton.OK, MessageBoxImage.Information));
+                    Convert.ToInt16(task["result"]),
+                    Convert.ToString(task["worker_name"]),
+                    Convert.ToString(task["title"]));
                 content.Children.Add(btnRate);
 
                 // Обёртка Border
@@ -135,6 +186,8 @@ namespace TaskTracker_KR
                 };
 
                 // Добавляем ПОСЛЕ существующего заголовка
+
+                
                 DataPanel.Children.Add(border);
             }
         }

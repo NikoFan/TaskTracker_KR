@@ -73,7 +73,13 @@
                 HorizontalAlignment="Stretch"
                 Orientation="Vertical">
                 <TextBlock Style="{StaticResource title}"
-                           Text="Вход в аккаунт"/>
+                           Text="Вход в аккаунт"
+                           Margin="20 20 20 0"/>
+                <TextBlock Style="{StaticResource normal_text}"
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           Padding="0"
+                            Text="Уточните данные у администратора"/>
                 <TextBlock Style="{StaticResource normal_text}"
                            Text="Введите логин"/>
                 <TextBox Style="{StaticResource inp_place}"

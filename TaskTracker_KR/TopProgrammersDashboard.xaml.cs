@@ -79,6 +79,17 @@ namespace TaskTracker_KR
             var data = await SupabaseHelper.GetTop5SuccessfulProgrammers();
 
             DataPanel.Children.Clear();
+            DataPanel.Children.Add(
+                   new TextBlock
+                   {
+                       Text = "Топ 5 сотрудников",
+                       FontSize = 20,
+                       FontWeight = FontWeights.Bold,
+                       HorizontalAlignment = HorizontalAlignment.Center,
+                       Margin = new Thickness(0, 10, 0, 15),
+                       TextAlignment = TextAlignment.Center
+                   }
+                   );
             foreach (var task in data)
             {
                 // Безопасное чтение данных
@@ -88,6 +99,7 @@ namespace TaskTracker_KR
 
                 // Содержимое карточки
                 StackPanel content = new();
+                
                 content.Children.Add(new TextBlock { Text = workerName, FontWeight = FontWeights.Bold, FontSize = 22, Margin = new Thickness(0, 0, 0, 4) });
                 content.Children.Add(new TextBlock { Text = "Общее число рейтинга: " + workerScore.ToString(), TextWrapping = TextWrapping.Wrap, Margin = new Thickness(0, 0, 0, 4) });
 
@@ -104,6 +116,7 @@ namespace TaskTracker_KR
                 };
 
                 // Добавляем ПОСЛЕ существующего заголовка
+               
                 DataPanel.Children.Add(border);
             }
         }

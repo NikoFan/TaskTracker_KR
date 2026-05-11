@@ -84,7 +84,7 @@
             HorizontalAlignment="Stretch"
             Orientation="Vertical">
                     <TextBlock Style="{StaticResource title}"
-                       Text="Не проверенные задачи"/>
+                       Text="Рейтинг пуст"/>
 
                 </StackPanel>
             </ScrollViewer>

@@ -224,7 +224,6 @@ namespace TaskTracker_KR.Services
                 {
                     Console.WriteLine($"ID: {stat["worker_id"]}, Name: {stat["worker_name"]}, Avg: {stat["avg_score"]}");
                 }
-
                 return response;
             }
             catch (PostgrestException ex)
